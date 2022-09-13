@@ -16,7 +16,7 @@ module.exports = {
         allowNull: false,
        },
     
-       phoneCode: {
+       phone_code: {
         type: Sequelize.INTEGER,
         allowNull: false,
        },
