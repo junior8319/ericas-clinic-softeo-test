@@ -5,12 +5,12 @@ module.exports = {
     await queryInterface.bulkInsert('countries', [
       {
         name: 'Brasil',
-        phoneCode: 55,
+        phone_code: 55,
         continent: 'América do Sul',
       },
       {
         name: 'Argentina',
-        phoneCode: 54,
+        phone_code: 54,
         continent: 'América do Sul',
       },
     ], {});
