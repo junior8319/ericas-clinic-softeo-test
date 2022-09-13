@@ -37,8 +37,6 @@ class Countries {
 
     const createdCountry = await Country.create({ ...country });
 
-    console.log(createdCountry);
-
     return createdCountry;
   }; 
 }
