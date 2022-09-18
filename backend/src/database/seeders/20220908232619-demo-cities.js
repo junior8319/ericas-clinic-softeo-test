@@ -5,27 +5,27 @@ module.exports = {
     await queryInterface.bulkInsert('cities', [
       {
         name: 'Cachoeira Paulista',
-        phoneCode: 12,
+        phone_code: 12,
         state: 'São Paulo',
-        countryId: 1,
+        country_id: 1,
       },
       {
         name: 'Canas',
-        phoneCode: 12,
+        phone_code: 12,
         state: 'São Paulo',
-        countryId: 1,
+        country_id: 1,
       },
       {
         name: 'Cruzeiro',
-        phoneCode: 12,
+        phone_code: 12,
         state: 'São Paulo',
-        countryId: 1,
+        country_id: 1,
       },
       {
         name: 'Buenos Aires',
-        phoneCode: 11,
+        phone_code: 11,
         state: 'Buenos Aires',
-        countryId: 2,
+        country_id: 2,
       },
     ], {});
   },

@@ -9,13 +9,13 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
-      customerUserId: {
+      customer_user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
       },
-      professionalUserId: {
+      professional_user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'users', key: 'id' },
@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
-      appointmentHour: {
+      appointment_hour: {
         type: Sequelize.TIME,
         allowNull: false,
       },
@@ -33,7 +33,7 @@ module.exports = {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
-      installmentsQuantity: {
+      installments_quantity: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

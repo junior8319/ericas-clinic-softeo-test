@@ -3,18 +3,18 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createTable('users_addresses', {
-      addressNumber: {
+      address_number: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      addressComplement: {
+      address_complement: {
         type: Sequelize.STRING,
       },
       type: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      addressCompInfo: {
+      address_comp_info: {
         type: Sequelize.STRING,
       },
       user_id: {

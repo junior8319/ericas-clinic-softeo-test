@@ -6,17 +6,17 @@ module.exports = {
       {
         prefix: 3103,
         number: 2907,
-        cityId: 1,
+        city_id: 1,
       },
       {
         prefix: 99625,
         number: 4431,
-        cityId: 1,
+        city_id: 1,
       },
       {
         prefix: parseInt('01234'),
         number: 5678,
-        cityId: 4,
+        city_id: 4,
       },
     ], {});
   },
