@@ -6,22 +6,22 @@ module.exports = {
       {
         type: 'Avenida',
         name: 'Tinogasta',
-        neighborhoodId: 4,
+        neighborhood_id: 4,
       },
       {
         type: 'Rua',
         name: 'Antonio Martins Lara',
-        neighborhoodId: 1,
+        neighborhood_id: 1,
       },
       {
         type: 'Avenida',
         name: 'José Randolfo Lorena',
-        neighborhoodId: 2,
+        neighborhood_id: 2,
       },
       {
         type: 'Avenida',
         name: 'Luís Bittencourt',
-        neighborhoodId: 3,
+        neighborhood_id: 3,
       },
     ], {});
   },

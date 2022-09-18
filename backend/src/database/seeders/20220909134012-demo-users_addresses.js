@@ -6,13 +6,13 @@ module.exports = {
       {
         user_id: 1,
         public_place_id: 2,
-        addressNumber: 180,
+        address_number: 180,
         type: 'residência',
       },
       {
         user_id: 2,
         public_place_id: 1,
-        addressNumber: 1001,
+        address_number: 1001,
         type: 'residência',
       },
     ], {});

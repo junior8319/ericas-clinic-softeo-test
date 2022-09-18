@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
   
-      phoneCode: {
+      phone_code: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -25,7 +25,7 @@ module.exports = {
         allowNull: false,
       },
   
-      countryId: {
+      country_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'countries', key: 'id' },

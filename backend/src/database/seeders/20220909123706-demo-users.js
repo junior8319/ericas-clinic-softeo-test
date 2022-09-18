@@ -5,24 +5,24 @@ module.exports = {
     await queryInterface.bulkInsert('users', [
       {
         name: 'Antonio Carlos Nunes da Silva Júnior',
-        birthDate: '1983-08-30',
+        birth_date: '1983-08-30',
         cpf: Number('00000100234'),
         rg: Number('001112220'),
-        roleId: 1,
+        role_id: 1,
       },
       {
         name: 'Erica Softeo',
-        birthDate: '1999-01-01',
+        birth_date: '1999-01-01',
         cpf: Number('00011122233'),
         rg: Number('112233445'),
-        roleId: 2,
+        role_id: 2,
       },
       {
         name: 'Ricardo Roberto Rasputin',
-        birthDate: '1999-02-01',
+        birth_date: '1999-02-01',
         cpf: Number('33322211100'),
         rg: Number('554432210'),
-        roleId: 3,
+        role_id: 3,
       },
     ], {});
   },

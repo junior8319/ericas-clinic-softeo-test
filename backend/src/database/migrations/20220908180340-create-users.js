@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      birthDate: {
+      birth_date: {
         type: Sequelize.DATEONLY,
         allowNull: false,
       },
@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      roleId: {
+      role_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'roles', key: 'id' },
