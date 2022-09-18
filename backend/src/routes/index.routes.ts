@@ -1,3 +1,7 @@
 import countriesRouter from './countries.routes';
+import rolesRouter from './roles.routes';
 
-export default countriesRouter;
+export {
+  countriesRouter,
+  rolesRouter,
+};
