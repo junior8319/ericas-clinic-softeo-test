@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import CountriesController from '../controllers/Countries.controller';
+import errorMiddleware from '../middlewares/error.middleware';
 
 const countriesRouter = Router();
 
-countriesRouter.get('/countries', CountriesController.getCountries);
-countriesRouter.post('/countries', CountriesController.createCountry);
+countriesRouter.get('/countries', CountriesController.getCountries, errorMiddleware.handleErrors);
+countriesRouter.post('/countries', CountriesController.createCountry, errorMiddleware.handleErrors);
+countriesRouter.put('/countries/:id', CountriesController.updateCountry, errorMiddleware.handleErrors);
 
 export default countriesRouter;
