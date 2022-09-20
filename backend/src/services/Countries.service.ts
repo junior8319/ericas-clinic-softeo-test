@@ -70,6 +70,18 @@ class Countries {
 
     return countryToUpdate;
   };
+
+  public deleteCountry = async (receivedId: string): Promise<ICountry | null> => {
+    if (!receivedId) return null;
+
+    this.id = Number(receivedId);
+
+    const countryToDelete = await Country.findOne({ where: { id: this.id } });
+
+    if (countryToDelete) await countryToDelete.destroy();
+
+    return countryToDelete;
+  };
 }
 
 export default Countries;
