@@ -53,6 +53,20 @@ class Countries {
       next(error);
     }
   };
+
+  public deleteCountry = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      if (!id) return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
+
+      await this.service.deleteCountry(id);
+
+      return res.status(202).json({ message: 'Registro excluído com sucesso.' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default new Countries();
