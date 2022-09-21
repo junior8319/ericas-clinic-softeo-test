@@ -39,6 +39,37 @@ class Roles {
       return errorMiddleware.handleErrors();
     }
   };
+
+  public updateRole = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      if (!id) return res.status(400).json({ message: 'É necessário informar o identificador(id)' });
+
+      if (!req.body) return res.status(400).json({ message: 'Sem dado para atualizar' });
+
+      const role = { ...req.body, id };
+
+      await this.service.updateRole(role);
+
+      return res.status(200).json(role);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public deleteRole = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      if (!id) return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
+
+      await this.service.deleteRole(id);
+
+      return res.status(202).json({ message: 'Registro excluído com sucesso.' });
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 export default new Roles();
