@@ -6,6 +6,8 @@ class Roles {
 
   public name!: string;
 
+  public id!: number;
+
   constructor() {
     Roles.model = new Role();
   }
@@ -33,9 +35,47 @@ class Roles {
 
     this.name = role.name;
 
+    const roleExists = await Roles.roleExists(this.name);
+    if (roleExists) return null;
+
     const createdRole = await Role.create({ ...role });
 
     return createdRole;
+  };
+
+  public updateRole = async (role: IRole): Promise<IRole | null> => {
+    if (!role) return null;
+
+    if (role.id) this.id = role.id;
+
+    const roleToUpdate = await Role.findOne({ where: { id: this.id } });
+    if (!roleToUpdate) return null;
+
+    if (role.name) {
+      await roleToUpdate.update({
+        name: role.name,
+      });
+    }
+
+    if (role.type) {
+      await roleToUpdate.update({
+        type: role.type,
+      });
+    }
+
+    return roleToUpdate;
+  };
+
+  public deleteRole = async (receivedId: string): Promise<IRole | null> => {
+    if (!receivedId) return null;
+
+    this.id = Number(receivedId);
+
+    const roleToDelete = await Role.findOne({ where: { id: this.id }  });
+
+    if (roleToDelete) await roleToDelete.destroy();
+
+    return roleToDelete;
   };
 }
 
