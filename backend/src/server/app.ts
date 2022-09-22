@@ -1,5 +1,10 @@
 import express, { json, NextFunction, Request, Response } from 'express';
-import { countriesRouter, rolesRouter } from '../routes/index.routes';
+import {
+  citiesRouter,
+  countriesRouter,
+  neighborhoodsRouter,
+  rolesRouter
+} from '../routes/index.routes';
 
 class App {
   public app: express.Express;
@@ -9,6 +14,8 @@ class App {
     this.config();
     this.app.use(countriesRouter);
     this.app.use(rolesRouter);
+    this.app.use(citiesRouter);
+    this.app.use(neighborhoodsRouter);
     this.middlewares();
 
     this.app.get('/', (_req, res) => res.send('Hello, World!'));
