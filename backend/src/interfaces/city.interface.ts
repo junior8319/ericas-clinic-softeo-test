@@ -1,4 +1,4 @@
-export default interface ICityData {
+export default interface ICity {
   id: number;
   name: string;
   phoneCode: number;
