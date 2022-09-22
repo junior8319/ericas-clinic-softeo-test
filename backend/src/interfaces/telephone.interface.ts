@@ -1,4 +1,4 @@
-export default interface ITelephoneData {
+export default interface ITelephone {
   id: number;
   prefix: number;
   number: number;
