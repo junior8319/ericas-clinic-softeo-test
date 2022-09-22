@@ -12,61 +12,64 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Countries_service_1 = __importDefault(require("../services/Countries.service"));
-class Countries {
+const error_middleware_1 = __importDefault(require("../middlewares/error.middleware"));
+const Roles_service_1 = __importDefault(require("../services/Roles.service"));
+class Roles {
     constructor() {
-        this.getCountries = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.getRoles = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const countriesList = yield this.service.getCountries();
-                if (!countriesList)
-                    return res.status(404).json({ message: 'Não encontramos países.' });
-                return res.status(200).json(countriesList);
+                const rolesList = yield this.service.getRoles();
+                if (!rolesList)
+                    return res.status(404).json({ message: 'Não encontramos atribuições de pessoas usuárias.' });
+                return res.status(200).json(rolesList);
             }
             catch (error) {
-                next(error);
+                error_middleware_1.default.handleErrors();
             }
         });
-        this.createCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.createRole = (req, res, _next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const country = req.body;
-                const createdCountry = yield this.service.createCountry(country);
-                if (!createdCountry) {
+                const role = req.body;
+                const createdRole = yield this.service.createRole(role);
+                if (!createdRole) {
                     return res.status(400)
-                        .json({ message: `Não foi possível criar o país com os dados: ${country}` });
+                        .json({ message: `Não foi possível criar a função com os dados: ${role}` });
                 }
-                return res.status(201).json(createdCountry);
+                return res.status(201).json(createdRole);
             }
             catch (error) {
                 console.log(error);
-                next(error);
+                return error_middleware_1.default.handleErrors();
             }
         });
-        this.updateCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.updateRole = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
+                if (!id)
+                    return res.status(400).json({ message: 'É necessário informar o identificador(id)' });
                 if (!req.body)
                     return res.status(400).json({ message: 'Sem dado para atualizar' });
-                const country = Object.assign(Object.assign({}, req.body), { id });
-                yield this.service.updateCountry(country);
-                return res.status(200).json(country);
+                const role = Object.assign(Object.assign({}, req.body), { id });
+                yield this.service.updateRole(role);
+                return res.status(200).json(role);
             }
             catch (error) {
                 next(error);
             }
         });
-        this.deleteCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.deleteRole = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
                 if (!id)
                     return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
-                yield this.service.deleteCountry(id);
+                yield this.service.deleteRole(id);
                 return res.status(202).json({ message: 'Registro excluído com sucesso.' });
             }
             catch (error) {
                 next(error);
             }
         });
-        this.service = new Countries_service_1.default();
+        this.service = new Roles_service_1.default();
     }
 }
-exports.default = new Countries();
+exports.default = new Roles();

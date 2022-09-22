@@ -12,61 +12,61 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Countries_service_1 = __importDefault(require("../services/Countries.service"));
-class Countries {
+const Neighborhoods_service_1 = __importDefault(require("../services/Neighborhoods.service"));
+class Neighborhoods {
     constructor() {
-        this.getCountries = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.getNeighborhoods = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const countriesList = yield this.service.getCountries();
-                if (!countriesList)
-                    return res.status(404).json({ message: 'Não encontramos países.' });
-                return res.status(200).json(countriesList);
+                const neighborhoodsList = yield this.service.getNeighborhoods();
+                if (!neighborhoodsList)
+                    return res.status(404).json({ message: 'Não encontramos bairros.' });
+                return res.status(200).json(neighborhoodsList);
             }
             catch (error) {
                 next(error);
             }
         });
-        this.createCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.createNeighborhood = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const country = req.body;
-                const createdCountry = yield this.service.createCountry(country);
-                if (!createdCountry) {
+                const neighborhood = req.body;
+                const createdNeighborhood = yield this.service.createNeighborhood(neighborhood);
+                if (!createdNeighborhood) {
                     return res.status(400)
-                        .json({ message: `Não foi possível criar o país com os dados: ${country}` });
+                        .json({ message: `Não foi possível criar o bairro com os dados: ${neighborhood}` });
                 }
-                return res.status(201).json(createdCountry);
+                return res.status(201).json(createdNeighborhood);
             }
             catch (error) {
                 console.log(error);
                 next(error);
             }
         });
-        this.updateCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.updateNeighborhood = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
                 if (!req.body)
                     return res.status(400).json({ message: 'Sem dado para atualizar' });
-                const country = Object.assign(Object.assign({}, req.body), { id });
-                yield this.service.updateCountry(country);
-                return res.status(200).json(country);
+                const neighborhood = Object.assign(Object.assign({}, req.body), { id });
+                yield this.service.updateNeighborhood(neighborhood);
+                return res.status(200).json(neighborhood);
             }
             catch (error) {
                 next(error);
             }
         });
-        this.deleteCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.deleteNeighborhood = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
                 if (!id)
                     return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
-                yield this.service.deleteCountry(id);
+                yield this.service.deleteNeighborhood(id);
                 return res.status(202).json({ message: 'Registro excluído com sucesso.' });
             }
             catch (error) {
                 next(error);
             }
         });
-        this.service = new Countries_service_1.default();
+        this.service = new Neighborhoods_service_1.default();
     }
 }
-exports.default = new Countries();
+exports.default = new Neighborhoods();

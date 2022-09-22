@@ -30,8 +30,41 @@ class Countries {
             if (countryExists)
                 return null;
             const createdCountry = yield Country_model_1.default.create(Object.assign({}, country));
-            console.log(createdCountry);
             return createdCountry;
+        });
+        this.updateCountry = (country) => __awaiter(this, void 0, void 0, function* () {
+            if (!country)
+                return null;
+            if (country.id)
+                this.id = country.id;
+            const countryToUpdate = yield Country_model_1.default.findOne({ where: { id: this.id } });
+            if (!countryToUpdate)
+                return null;
+            if (country.name) {
+                yield countryToUpdate.update({
+                    name: country.name,
+                });
+            }
+            if (country.continent) {
+                yield countryToUpdate.update({
+                    continent: country.continent,
+                });
+            }
+            if (country.phoneCode) {
+                yield countryToUpdate.update({
+                    phoneCode: country.phoneCode,
+                });
+            }
+            return countryToUpdate;
+        });
+        this.deleteCountry = (receivedId) => __awaiter(this, void 0, void 0, function* () {
+            if (!receivedId)
+                return null;
+            this.id = Number(receivedId);
+            const countryToDelete = yield Country_model_1.default.findOne({ where: { id: this.id } });
+            if (countryToDelete)
+                yield countryToDelete.destroy();
+            return countryToDelete;
         });
         Countries.model = new Country_model_1.default();
     }

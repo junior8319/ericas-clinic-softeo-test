@@ -22,12 +22,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
-const countries_routes_1 = __importDefault(require("../routes/countries.routes"));
+const index_routes_1 = require("../routes/index.routes");
 class App {
     constructor() {
         this.middlewares = () => {
@@ -38,7 +35,10 @@ class App {
         };
         this.app = (0, express_1.default)();
         this.config();
-        this.app.use(countries_routes_1.default);
+        this.app.use(index_routes_1.countriesRouter);
+        this.app.use(index_routes_1.rolesRouter);
+        this.app.use(index_routes_1.citiesRouter);
+        this.app.use(index_routes_1.neighborhoodsRouter);
         this.middlewares();
         this.app.get('/', (_req, res) => res.send('Hello, World!'));
     }
