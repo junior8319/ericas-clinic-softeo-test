@@ -37,7 +37,7 @@ Telephone.init(
     underscored: true,
     sequelize: db,
     timestamps: false,
-    modelName: 'telephne',
+    modelName: 'telephone',
     tableName: 'telephones',
   },
 );
