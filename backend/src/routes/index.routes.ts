@@ -3,6 +3,8 @@ import rolesRouter from './roles.routes';
 import citiesRouter from './cities.routes';
 import neighborhoodsRouter from './neighborhoods.routes';
 import telephonesRouter from './telephones.routes';
+import publicPlacesRouter from './publicPlaces.routes';
+import usersRouter from './users.routes';
 
 export {
   countriesRouter,
@@ -10,4 +12,6 @@ export {
   citiesRouter,
   neighborhoodsRouter,
   telephonesRouter,
+  publicPlacesRouter,
+  usersRouter,
 };
