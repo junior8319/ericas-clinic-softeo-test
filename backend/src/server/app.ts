@@ -3,8 +3,10 @@ import {
   citiesRouter,
   countriesRouter,
   neighborhoodsRouter,
+  publicPlacesRouter,
   rolesRouter,
-  telephonesRouter
+  telephonesRouter,
+  usersRouter
 } from '../routes/index.routes';
 
 class App {
@@ -18,6 +20,8 @@ class App {
     this.app.use(citiesRouter);
     this.app.use(neighborhoodsRouter);
     this.app.use(telephonesRouter);
+    this.app.use(publicPlacesRouter);
+    this.app.use(usersRouter);
     this.middlewares();
 
     this.app.get('/', (_req, res) => res.send('Hello, World!'));
