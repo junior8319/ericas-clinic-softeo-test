@@ -38,7 +38,7 @@ PublicPlace.init(
     underscored: true,
     timestamps: false,
     modelName: 'publicPlace',
-    tableName: 'pulic_places',
+    tableName: 'public_places',
   }
 );
 
