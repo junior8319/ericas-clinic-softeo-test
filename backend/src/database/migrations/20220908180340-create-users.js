@@ -18,12 +18,12 @@ module.exports = {
         allowNull: false,
       },
       cpf: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
       rg: {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
@@ -31,6 +31,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'roles', key: 'id' },
+      },
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: true,
+      },
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: true,
       },
     });
   },
