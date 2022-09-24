@@ -25,12 +25,12 @@ User.init({
         allowNull: false,
     },
     cpf: {
-        type: sequelize_1.DataTypes.BIGINT,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
     rg: {
-        type: sequelize_1.DataTypes.BIGINT,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
@@ -45,7 +45,7 @@ User.init({
     modelName: 'user',
     tableName: 'users',
 });
-User.hasOne(Role_model_1.default, { foreignKey: 'roleId', as: 'role' });
+User.belongsTo(Role_model_1.default, { foreignKey: 'roleId', as: 'role' });
 User.hasMany(Attendance_model_1.default, { foreignKey: 'customerUserId', as: 'appointments' });
 User.hasMany(Attendance_model_1.default, { foreignKey: 'professionalUserId', as: 'attendances' });
 exports.default = User;

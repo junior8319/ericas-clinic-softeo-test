@@ -39,6 +39,9 @@ class App {
         this.app.use(index_routes_1.rolesRouter);
         this.app.use(index_routes_1.citiesRouter);
         this.app.use(index_routes_1.neighborhoodsRouter);
+        this.app.use(index_routes_1.telephonesRouter);
+        this.app.use(index_routes_1.publicPlacesRouter);
+        this.app.use(index_routes_1.usersRouter);
         this.middlewares();
         this.app.get('/', (_req, res) => res.send('Hello, World!'));
     }

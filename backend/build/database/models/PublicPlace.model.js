@@ -32,7 +32,7 @@ PublicPlace.init({
     underscored: true,
     timestamps: false,
     modelName: 'publicPlace',
-    tableName: 'pulic_places',
+    tableName: 'public_places',
 });
 PublicPlace.belongsTo(Neighborhood_model_1.default, { foreignKey: 'neighborhoodId', as: 'neighborhood' });
 exports.default = PublicPlace;
