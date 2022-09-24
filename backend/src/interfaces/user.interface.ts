@@ -1,8 +1,8 @@
-export default interface IUserData {
+export default interface IUser {
   id: number;
   name: string;
   birthDate: Date;
-  cpf: number;
-  rg: number;
+  cpf: string;
+  rg: string;
   roleId: number;
 }
