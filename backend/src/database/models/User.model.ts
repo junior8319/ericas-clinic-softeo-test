@@ -10,9 +10,9 @@ class User extends Model {
 
   public birthDate!: Date;
 
-  public cpf!: number;
+  public cpf!: string;
 
-  public rg!: number;
+  public rg!: string;
 
   public roleId!: number;
 }
@@ -34,12 +34,12 @@ User.init(
       allowNull: false,
     },
     cpf: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
     rg: {
-      type: DataTypes.BIGINT,
+      type: DataTypes.STRING,
       allowNull: false,
       unique: true,
     },
@@ -57,7 +57,7 @@ User.init(
   }
 );
 
-User.hasOne(Role, { foreignKey: 'roleId', as: 'role' });
+User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
 User.hasMany(Attendance, { foreignKey: 'customerUserId', as: 'appointments'  });
 User.hasMany(Attendance, { foreignKey: 'professionalUserId', as: 'attendances' });
 
