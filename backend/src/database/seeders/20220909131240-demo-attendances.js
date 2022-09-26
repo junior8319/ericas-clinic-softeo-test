@@ -8,7 +8,7 @@ module.exports = {
         professional_user_id: 2,
         date: '2022-09-09',
         appointment_hour: '15:00',
-        totalPrice: 150.00,
+        total_price: 150.00,
         installments_quantity: 3,
       },
       {
@@ -16,7 +16,7 @@ module.exports = {
         professional_user_id: 2,
         date: '2022-09-12',
         appointment_hour: '15:00',
-        totalPrice: 250.00,
+        total_price: 250.00,
         installments_quantity: 5,
       },
       {
@@ -24,7 +24,7 @@ module.exports = {
         professional_user_id: 2,
         date: '2022-09-14',
         appointment_hour: '11:00',
-        totalPrice: 100.00,
+        total_price: 100.00,
         installments_quantity: 2,
       },
     ], {});
