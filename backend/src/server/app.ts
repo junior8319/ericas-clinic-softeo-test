@@ -1,4 +1,5 @@
 import express, { json, NextFunction, Request, Response } from 'express';
+import attendancesRouter from '../routes/attendances.routes';
 import {
   citiesRouter,
   countriesRouter,
@@ -22,6 +23,7 @@ class App {
     this.app.use(telephonesRouter);
     this.app.use(publicPlacesRouter);
     this.app.use(usersRouter);
+    this.app.use(attendancesRouter);
     this.middlewares();
 
     this.app.get('/', (_req, res) => res.send('Hello, World!'));
