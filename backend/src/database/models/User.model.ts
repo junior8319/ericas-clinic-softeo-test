@@ -58,7 +58,5 @@ User.init(
 );
 
 User.belongsTo(Role, { foreignKey: 'roleId', as: 'role' });
-User.hasMany(Attendance, { foreignKey: 'customerUserId', as: 'appointments'  });
-User.hasMany(Attendance, { foreignKey: 'professionalUserId', as: 'attendances' });
 
 export default User;
