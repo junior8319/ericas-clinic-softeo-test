@@ -1,3 +1,4 @@
+import Attendance from "../database/models/Attendance.model";
 import Role from "../database/models/Role.model";
 import User from "../database/models/User.model";
 import IUser from "../interfaces/user.interface";
@@ -15,8 +16,11 @@ class Users {
 
   public getUsers = async (): Promise<IUser[] | null> => {
     const usersList = await User.findAll({
-      raw: true,
-      include: { model: Role, as: 'role', attributes: { exclude: ['id'] } },
+      include: [
+        { model: Role, as: 'role', attributes: { exclude: ['id'] } },
+        { model: Attendance, as: 'appointments', attributes: { exclude: ['id'] } },
+        { model: Attendance, as: 'attendances', attributes: { exclude: ['id'] } },
+      ],
     });
     if (!usersList) return null;
 
