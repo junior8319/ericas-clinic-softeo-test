@@ -13,14 +13,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+const Attendance_model_1 = __importDefault(require("../database/models/Attendance.model"));
 const Role_model_1 = __importDefault(require("../database/models/Role.model"));
 const User_model_1 = __importDefault(require("../database/models/User.model"));
 class Users {
     constructor() {
         this.getUsers = () => __awaiter(this, void 0, void 0, function* () {
             const usersList = yield User_model_1.default.findAll({
-                raw: true,
-                include: { model: Role_model_1.default, as: 'role', attributes: { exclude: ['id'] } },
+                // raw: true,
+                include: [
+                    { model: Role_model_1.default, as: 'role', attributes: { exclude: ['id'] } },
+                    { model: Attendance_model_1.default, as: 'appointments', attributes: { exclude: ['id'] } },
+                ],
             });
             if (!usersList)
                 return null;
@@ -41,7 +45,6 @@ class Users {
                 return null;
             this.id = user.id;
             const userToUpdate = yield User_model_1.default.findByPk(this.id);
-            console.log('USERTOUPDATE', userToUpdate);
             if (!userToUpdate)
                 return null;
             if (user.name) {

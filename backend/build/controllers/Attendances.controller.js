@@ -12,55 +12,55 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Users_service_1 = __importDefault(require("../services/Users.service"));
-class Users {
+const Attendances_service_1 = __importDefault(require("../services/Attendances.service"));
+class Attendances {
     constructor() {
-        this.getUsers = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.getAttendances = (_req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const usersList = yield this.service.getUsers();
-                if (!usersList)
+                const attendancesList = yield this.service.getAttendances();
+                if (!attendancesList)
                     return res.status(404)
-                        .json({ message: 'Não encontramos pessoas usuárias.' });
-                return res.status(200).json(usersList);
+                        .json({ message: 'Não encontramos atendimentos.' });
+                return res.status(200).json(attendancesList);
             }
             catch (error) {
                 console.log(error);
                 next(error);
             }
         });
-        this.createUser = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.createAttendance = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                const newUser = req.body;
-                const createdUser = yield this.service.createUser(newUser);
-                if (!createdUser) {
+                const newAttendance = req.body;
+                const createdAttendance = yield this.service.createAttendance(newAttendance);
+                if (!createdAttendance) {
                     return res.status(400)
                         .json({
-                        message: `Não foi possível criar usuário com os dados ${newUser}`,
+                        message: `Não foi possível criar atendimento com os dados ${newAttendance}`,
                     });
                 }
-                return res.status(201).json(createdUser);
+                return res.status(201).json(createdAttendance);
             }
             catch (error) {
                 console.log(error);
                 next(error);
             }
         });
-        this.updateUser = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.updateAttendance = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
                 if (!id || !req.body)
                     return res.status(400)
                         .json({ message: 'Sem dado para atualizar' });
-                const user = Object.assign(Object.assign({}, req.body), { id });
-                yield this.service.updateUser(user);
-                return res.status(200).json(user);
+                const attendance = Object.assign(Object.assign({}, req.body), { id });
+                yield this.service.updateAttendance(attendance);
+                return res.status(200).json(attendance);
             }
             catch (error) {
                 console.log(error);
                 next(error);
             }
         });
-        this.deleteUser = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.deleteAttendance = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
                 if (!id)
@@ -68,10 +68,10 @@ class Users {
                         .json({
                         message: 'Por favor, nos passe um identificador(id) para excluir.',
                     });
-                const userDeleted = yield this.service.deleteUser(id);
-                if (!userDeleted)
+                const attendanceDeleted = yield this.service.deleteAttendance(id);
+                if (!attendanceDeleted)
                     return res.status(404)
-                        .json({ message: `Não encontramos usuário com o id ${id}` });
+                        .json({ message: `Não encontramos atendimento com o id ${id}` });
                 return res.status(202).json({ message: 'Registro excluído com sucesso' });
             }
             catch (error) {
@@ -79,7 +79,7 @@ class Users {
                 next(error);
             }
         });
-        this.service = new Users_service_1.default();
+        this.service = new Attendances_service_1.default();
     }
 }
-exports.default = new Users();
+exports.default = new Attendances();

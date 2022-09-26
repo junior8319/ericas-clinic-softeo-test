@@ -22,8 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importStar(require("express"));
+const attendances_routes_1 = __importDefault(require("../routes/attendances.routes"));
 const index_routes_1 = require("../routes/index.routes");
 class App {
     constructor() {
@@ -42,6 +46,7 @@ class App {
         this.app.use(index_routes_1.telephonesRouter);
         this.app.use(index_routes_1.publicPlacesRouter);
         this.app.use(index_routes_1.usersRouter);
+        this.app.use(attendances_routes_1.default);
         this.middlewares();
         this.app.get('/', (_req, res) => res.send('Hello, World!'));
     }
