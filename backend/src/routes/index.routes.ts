@@ -5,6 +5,7 @@ import neighborhoodsRouter from './neighborhoods.routes';
 import telephonesRouter from './telephones.routes';
 import publicPlacesRouter from './publicPlaces.routes';
 import usersRouter from './users.routes';
+import attendancesRouter from './attendances.routes';
 
 export {
   countriesRouter,
@@ -14,4 +15,5 @@ export {
   telephonesRouter,
   publicPlacesRouter,
   usersRouter,
+  attendancesRouter,
 };
