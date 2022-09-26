@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.TIME,
         allowNull: false,
       },
-      totalPrice: {
+      total_price: {
         type: Sequelize.DECIMAL,
         allowNull: false,
       },
