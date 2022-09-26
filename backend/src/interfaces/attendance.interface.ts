@@ -1,4 +1,4 @@
-export default interface IAttendanceData {
+export default interface IAttendance {
   id: number;
   customerUserId: number;
   professionalUserId: number;
