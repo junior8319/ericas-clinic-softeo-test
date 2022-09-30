@@ -6,6 +6,7 @@ module.exports = {
       type: {
         type: Sequelize.STRING,
         allowNull: false,
+        primaryKey: true,
       },
       user_id: {
         type: Sequelize.INTEGER,
