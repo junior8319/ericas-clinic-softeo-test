@@ -19,10 +19,9 @@ class Attendances {
     constructor() {
         this.getAttendances = () => __awaiter(this, void 0, void 0, function* () {
             const attendancesList = yield Attendance_model_1.default.findAll({
-                raw: true,
                 include: [
-                    { model: User_model_1.default, as: 'attendances', attributes: { exclude: ['birthDate', 'rg', 'cpf', 'createdAt', 'updatedAt'] } },
-                    { model: User_model_1.default, as: 'appointments', attributes: { exclude: ['rg', 'cpf', 'createdAt', 'updatedAt'] } },
+                    { model: User_model_1.default, as: 'attendant', attributes: { exclude: ['birthDate', 'rg', 'cpf', 'createdAt', 'updatedAt'] } },
+                    { model: User_model_1.default, as: 'patient', attributes: { exclude: ['rg', 'cpf', 'createdAt', 'updatedAt'] } },
                 ],
             });
             if (!attendancesList)
@@ -40,56 +39,63 @@ class Attendances {
                 return null;
             return newAttendance;
         });
-        this.updateAttendanceKey = (key, id) => __awaiter(this, void 0, void 0, function* () {
-            if (!key)
-                return null;
-            const attendanceToUpdate = yield Attendance_model_1.default.findByPk(id);
-            if (!attendanceToUpdate)
-                return null;
-            yield attendanceToUpdate.update({ [key]: attendanceToUpdate[key] });
-            return attendanceToUpdate;
-        });
-        this.updateAttendance = (attendance) => {
+        // public updateAttendanceKey = async (key: keyof IAttendance, id: number): Promise<IAttendance | null> => {
+        //   if (!key) return null;
+        //   const attendanceToUpdate = await Attendance.findByPk(id);
+        //   if (!attendanceToUpdate) return null;
+        //   console.log('ATTENDANCE_TO_UPDATE', attendanceToUpdate);
+        //   await attendanceToUpdate.update({ [key]: attendanceToUpdate[key] });
+        //   console.log('ATTENDANCE_UPDATED?', attendanceToUpdate);
+        //   return attendanceToUpdate;
+        // };
+        this.updateAttendance = (attendance) => __awaiter(this, void 0, void 0, function* () {
             if (!attendance)
                 return null;
             if (attendance.id)
                 this.id = attendance.id;
-            const attendanceKeys = Object.keys(attendance);
-            if (!attendanceKeys || attendanceKeys.length === 0)
+            // const attendanceKeys = Object.keys(attendance) as Array<keyof IAttendance>;
+            // if (!attendanceKeys || attendanceKeys.length === 0) return null;
+            // console.log('ATTENDANCE_KEYS', attendanceKeys);
+            // const updatedAttendance = attendanceKeys.forEach((key) => {
+            //   if (key !== 'id') {
+            //     this.updateAttendanceKey(key, this.id);
+            //   }
+            // });
+            const attendanceToUpdate = yield Attendance_model_1.default.findByPk(this.id);
+            if (!attendanceToUpdate)
                 return null;
-            attendanceKeys.forEach((key) => this.updateAttendanceKey(key, this.id));
-            // if (attendance.customerUserId) {
-            //   await attendanceToUpdate.update({
-            //     customerUserId: attendance.customerUserId,
-            //   });
-            // }
-            // if (attendance.professionalUserId) {
-            //   await attendanceToUpdate.update({
-            //     professionalUserId: attendance.professionalUserId,
-            //   });
-            // }
-            // if (attendance.date) {
-            //   await attendanceToUpdate.update({
-            //     date: attendance.date,
-            //   });
-            // }
-            // if (attendance.appointmentHour) {
-            //   await attendanceToUpdate.update({
-            //     appointmentHour: attendance.appointmentHour,
-            //   });
-            // }
-            // if (attendance.totalPrice) {
-            //   await attendanceToUpdate.update({
-            //     totalPrice: attendance.totalPrice,
-            //   });
-            // }
-            // if (attendance.installmentsQuantity) {
-            //   await attendanceToUpdate.update({
-            //     installmentsQuantity: attendance.installmentsQuantity,
-            //   });
-            // }
-            // return attendanceToUpdate;
-        };
+            if (attendance.customerUserId) {
+                yield attendanceToUpdate.update({
+                    customerUserId: attendance.customerUserId,
+                });
+            }
+            if (attendance.professionalUserId) {
+                yield attendanceToUpdate.update({
+                    professionalUserId: attendance.professionalUserId,
+                });
+            }
+            if (attendance.date) {
+                yield attendanceToUpdate.update({
+                    date: attendance.date,
+                });
+            }
+            if (attendance.appointmentHour) {
+                yield attendanceToUpdate.update({
+                    appointmentHour: attendance.appointmentHour,
+                });
+            }
+            if (attendance.totalPrice) {
+                yield attendanceToUpdate.update({
+                    totalPrice: attendance.totalPrice,
+                });
+            }
+            if (attendance.installmentsQuantity) {
+                yield attendanceToUpdate.update({
+                    installmentsQuantity: attendance.installmentsQuantity,
+                });
+            }
+            return attendanceToUpdate;
+        });
         this.deleteAttendance = (receivedId) => __awaiter(this, void 0, void 0, function* () {
             if (!receivedId)
                 return null;

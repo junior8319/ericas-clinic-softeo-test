@@ -15,15 +15,17 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Attendance_model_1 = __importDefault(require("../database/models/Attendance.model"));
 const Role_model_1 = __importDefault(require("../database/models/Role.model"));
+const Telephone_model_1 = __importDefault(require("../database/models/Telephone.model"));
 const User_model_1 = __importDefault(require("../database/models/User.model"));
 class Users {
     constructor() {
         this.getUsers = () => __awaiter(this, void 0, void 0, function* () {
             const usersList = yield User_model_1.default.findAll({
-                // raw: true,
                 include: [
                     { model: Role_model_1.default, as: 'role', attributes: { exclude: ['id'] } },
                     { model: Attendance_model_1.default, as: 'appointments', attributes: { exclude: ['id'] } },
+                    { model: Attendance_model_1.default, as: 'attendances', attributes: { exclude: ['id'] } },
+                    { model: Telephone_model_1.default, as: 'telephones', through: { attributes: ['type'] } },
                 ],
             });
             if (!usersList)

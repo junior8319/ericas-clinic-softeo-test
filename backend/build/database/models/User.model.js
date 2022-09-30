@@ -41,7 +41,7 @@ User.init({
     sequelize: _1.default,
     underscored: true,
     timestamps: true,
-    modelName: 'user',
+    // modelName: 'user',
     tableName: 'users',
 });
 User.belongsTo(Role_model_1.default, { foreignKey: 'roleId', as: 'role' });

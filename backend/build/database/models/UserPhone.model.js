@@ -10,6 +10,20 @@ const User_model_1 = __importDefault(require("./User.model"));
 class UserPhone extends sequelize_1.Model {
 }
 UserPhone.init({
+    userId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        references: {
+            model: 'users',
+            key: 'id'
+        }
+    },
+    phoneId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        references: {
+            model: 'telephones',
+            key: 'id',
+        },
+    },
     type: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
@@ -18,9 +32,9 @@ UserPhone.init({
     sequelize: _1.default,
     underscored: true,
     timestamps: false,
-    modelName: 'userPhone',
+    // modelName: 'userPhone',
     tableName: 'users_phones',
 });
-User_model_1.default.belongsToMany(Telephone_model_1.default, { through: UserPhone });
-Telephone_model_1.default.belongsToMany(User_model_1.default, { through: UserPhone });
+User_model_1.default.belongsToMany(Telephone_model_1.default, { foreignKey: 'userId', otherKey: 'phoneId', through: UserPhone, as: 'telephones' });
+Telephone_model_1.default.belongsToMany(User_model_1.default, { foreignKey: 'phoneId', otherKey: 'userId', through: UserPhone, as: 'users' });
 exports.default = UserPhone;

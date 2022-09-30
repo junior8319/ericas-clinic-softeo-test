@@ -47,6 +47,7 @@ class App {
         this.app.use(index_routes_1.publicPlacesRouter);
         this.app.use(index_routes_1.usersRouter);
         this.app.use(attendances_routes_1.default);
+        this.app.use(index_routes_1.usersPhonesRouter);
         this.middlewares();
         this.app.get('/', (_req, res) => res.send('Hello, World!'));
     }
