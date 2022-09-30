@@ -51,64 +51,75 @@ class Attendances {
     return newAttendance;
   };
 
-  public updateAttendanceKey = async (key: keyof IAttendance, id: number): Promise<IAttendance | null> => {
-    if (!key) return null;
+  // public updateAttendanceKey = async (key: keyof IAttendance, id: number): Promise<IAttendance | null> => {
+  //   if (!key) return null;
 
-    const attendanceToUpdate = await Attendance.findByPk(id);
-    if (!attendanceToUpdate) return null;
+  //   const attendanceToUpdate = await Attendance.findByPk(id);
+  //   if (!attendanceToUpdate) return null;
+  //   console.log('ATTENDANCE_TO_UPDATE', attendanceToUpdate);
+    
+  //   await attendanceToUpdate.update({ [key]: attendanceToUpdate[key] });
+  //   console.log('ATTENDANCE_UPDATED?', attendanceToUpdate);
 
-    await attendanceToUpdate.update({ [key]: attendanceToUpdate[key] });
+  //   return attendanceToUpdate;
+  // };
 
-    return attendanceToUpdate;
-  };
-
-  public updateAttendance = (attendance: IAttendance): void | null => {
+  public updateAttendance = async (attendance: IAttendance): Promise<IAttendance | null> => {
     if (!attendance) return null;
 
     if (attendance.id) this.id = attendance.id;
 
-    const attendanceKeys = Object.keys(attendance) as Array<keyof IAttendance>;
-    if (!attendanceKeys || attendanceKeys.length === 0) return null;
+    // const attendanceKeys = Object.keys(attendance) as Array<keyof IAttendance>;
+    // if (!attendanceKeys || attendanceKeys.length === 0) return null;
+    // console.log('ATTENDANCE_KEYS', attendanceKeys);
 
-    attendanceKeys.forEach((key) => this.updateAttendanceKey(key, this.id));
+    // const updatedAttendance = attendanceKeys.forEach((key) => {
+    //   if (key !== 'id') {
+    //     this.updateAttendanceKey(key, this.id);
+    //   }
+    // });
+
+    const attendanceToUpdate = await Attendance.findByPk(this.id);
+    if (!attendanceToUpdate) return null;
+
     
-    // if (attendance.customerUserId) {
-    //   await attendanceToUpdate.update({
-    //     customerUserId: attendance.customerUserId,
-    //   });
-    // }
+    if (attendance.customerUserId) {
+      await attendanceToUpdate.update({
+        customerUserId: attendance.customerUserId,
+      });
+    }
 
-    // if (attendance.professionalUserId) {
-    //   await attendanceToUpdate.update({
-    //     professionalUserId: attendance.professionalUserId,
-    //   });
-    // }
+    if (attendance.professionalUserId) {
+      await attendanceToUpdate.update({
+        professionalUserId: attendance.professionalUserId,
+      });
+    }
 
-    // if (attendance.date) {
-    //   await attendanceToUpdate.update({
-    //     date: attendance.date,
-    //   });
-    // }
+    if (attendance.date) {
+      await attendanceToUpdate.update({
+        date: attendance.date,
+      });
+    }
 
-    // if (attendance.appointmentHour) {
-    //   await attendanceToUpdate.update({
-    //     appointmentHour: attendance.appointmentHour,
-    //   });
-    // }
+    if (attendance.appointmentHour) {
+      await attendanceToUpdate.update({
+        appointmentHour: attendance.appointmentHour,
+      });
+    }
 
-    // if (attendance.totalPrice) {
-    //   await attendanceToUpdate.update({
-    //     totalPrice: attendance.totalPrice,
-    //   });
-    // }
+    if (attendance.totalPrice) {
+      await attendanceToUpdate.update({
+        totalPrice: attendance.totalPrice,
+      });
+    }
 
-    // if (attendance.installmentsQuantity) {
-    //   await attendanceToUpdate.update({
-    //     installmentsQuantity: attendance.installmentsQuantity,
-    //   });
-    // }
+    if (attendance.installmentsQuantity) {
+      await attendanceToUpdate.update({
+        installmentsQuantity: attendance.installmentsQuantity,
+      });
+    }
 
-    // return attendanceToUpdate;
+    return attendanceToUpdate;
   };
 
   public deleteAttendance = async (receivedId: string): Promise<IAttendance | null> => {
