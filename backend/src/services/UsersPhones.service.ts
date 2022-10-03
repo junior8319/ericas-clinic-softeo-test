@@ -53,6 +53,36 @@ class UsersPhones {
     const newUserPhone = UserPhone.create({ ...userPhone });
     return newUserPhone;    
   };
+
+  public updateUserPhone = async (userPhone: IUserPhone): Promise<IUserPhone | null> => {
+    if (
+      !userPhone ||
+      !userPhone.phoneId ||
+      !userPhone.type ||
+      !userPhone.userId
+    ) return null;
+
+    this.phoneId = userPhone.phoneId;
+    this.type = userPhone.type;
+    this.userId = userPhone.userId;
+
+    const userPhoneToUpdate = await UserPhone.findOne({
+      where: {
+        phoneId: this.phoneId,
+        userId: this.userId,
+        type: this.type,
+      },
+    });
+    if (!userPhoneToUpdate) return null;
+
+    await userPhoneToUpdate.update({
+      phoneId: userPhone.phoneId,
+      userId: userPhone.userId,
+      type: userPhone.type,
+    });
+
+    return userPhoneToUpdate;
+  };
 }
 
 export default UsersPhones;
