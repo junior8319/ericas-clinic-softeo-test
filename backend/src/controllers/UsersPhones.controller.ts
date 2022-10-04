@@ -77,6 +77,37 @@ class UsersPhones {
       next(error);
     }
   };
+
+  public deleteUserPhone = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId, phoneId, type } = req.params;
+
+      if (!userId || !phoneId || !type) {
+        return res.status(400)
+          .json({ message: 'Favor enviar userId, phoneId e type para buscar' });
+      }
+
+      this.userId = Number(userId);
+      this.phoneId = Number(phoneId);
+      this.type = type;
+      const userPhoneToDelete = {
+        userId: this.userId,
+        phoneId: this.phoneId,
+        type: this.type,
+      }; 
+
+      const userPhoneDeleted = await this.service.deleteUserPhone(userPhoneToDelete);
+      if (!userPhoneDeleted) return res.status(404)
+        .json({
+          message: `Não encontramos registro com os dados ${userPhoneToDelete}`
+      });
+
+      return res.status(202).json({ message: 'Registro excluído com sucesso' });
+    } catch (error) {
+      console.log(error);
+      next(error);      
+    }
+  };
 }
 
 export default new UsersPhones();
