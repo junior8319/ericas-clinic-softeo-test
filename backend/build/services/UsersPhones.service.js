@@ -36,6 +36,31 @@ class UsersPhones {
             const newUserPhone = UserPhone_model_1.default.create(Object.assign({}, userPhone));
             return newUserPhone;
         });
+        this.updateUserPhone = (userPhone) => __awaiter(this, void 0, void 0, function* () {
+            if (!userPhone ||
+                !userPhone.phoneId ||
+                !userPhone.type ||
+                !userPhone.userId)
+                return null;
+            this.phoneId = userPhone.phoneId;
+            this.type = userPhone.type;
+            this.userId = userPhone.userId;
+            const userPhoneToUpdate = yield UserPhone_model_1.default.findOne({
+                where: {
+                    phoneId: this.phoneId,
+                    userId: this.userId,
+                    type: this.type,
+                },
+            });
+            if (!userPhoneToUpdate)
+                return null;
+            yield userPhoneToUpdate.update({
+                phoneId: userPhone.phoneId,
+                userId: userPhone.userId,
+                type: userPhone.type,
+            });
+            return userPhoneToUpdate;
+        });
         UsersPhones.model = new UserPhone_model_1.default();
     }
 }

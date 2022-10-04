@@ -32,7 +32,7 @@ UserPhone.init({
     sequelize: _1.default,
     underscored: true,
     timestamps: false,
-    // modelName: 'userPhone',
+    modelName: 'userPhone',
     tableName: 'users_phones',
 });
 User_model_1.default.belongsToMany(Telephone_model_1.default, { foreignKey: 'userId', otherKey: 'phoneId', through: UserPhone, as: 'telephones' });

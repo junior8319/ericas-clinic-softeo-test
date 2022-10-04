@@ -31,7 +31,7 @@ Telephone.init({
     underscored: true,
     sequelize: _1.default,
     timestamps: false,
-    // modelName: 'telephone',
+    modelName: 'telephone',
     tableName: 'telephones',
 });
 Telephone.belongsTo(City_model_1.default, { foreignKey: 'cityId', as: 'city' });
