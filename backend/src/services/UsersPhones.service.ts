@@ -1,5 +1,3 @@
-import Telephone from '../database/models/Telephone.model';
-import User from '../database/models/User.model';
 import UserPhone from '../database/models/UserPhone.model';
 import IUserPhone from '../interfaces/userPhone.interface';
 
