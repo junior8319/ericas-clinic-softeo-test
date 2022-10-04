@@ -16,4 +16,10 @@ usersPhonesRouter.post(
   errorMiddleware.handleErrors,
 );
 
+usersPhonesRouter.put(
+  '/usersPhones/:userId/:phoneId/:type',
+  UsersPhonesController.updateUserPhone,
+  errorMiddleware.handleErrors,
+);
+
 export default usersPhonesRouter;
