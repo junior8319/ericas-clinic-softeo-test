@@ -54,31 +54,35 @@ class UsersPhones {
     return newUserPhone;    
   };
 
-  public updateUserPhone = async (userPhone: IUserPhone): Promise<IUserPhone | null> => {
+  public updateUserPhone = async (userPhone: IUserPhone, dataToUpdate: IUserPhone): Promise<IUserPhone | null> => {
     if (
       !userPhone ||
       !userPhone.phoneId ||
       !userPhone.type ||
-      !userPhone.userId
+      !userPhone.userId ||
+      !dataToUpdate ||
+      !dataToUpdate.phoneId ||
+      !dataToUpdate.userId ||
+      !dataToUpdate.type
     ) return null;
 
-    this.phoneId = userPhone.phoneId;
-    this.type = userPhone.type;
-    this.userId = userPhone.userId;
+    this.phoneId = Number(dataToUpdate.phoneId);
+    this.type = dataToUpdate.type;
+    this.userId = dataToUpdate.userId;
 
     const userPhoneToUpdate = await UserPhone.findOne({
       where: {
-        phoneId: this.phoneId,
-        userId: this.userId,
-        type: this.type,
+        phoneId: userPhone.phoneId,
+        userId: userPhone.userId,
+        type: userPhone.type,
       },
     });
     if (!userPhoneToUpdate) return null;
 
     await userPhoneToUpdate.update({
-      phoneId: userPhone.phoneId,
-      userId: userPhone.userId,
-      type: userPhone.type,
+      phoneId: dataToUpdate.phoneId,
+      userId: dataToUpdate.userId,
+      type: dataToUpdate.type,
     });
 
     return userPhoneToUpdate;
