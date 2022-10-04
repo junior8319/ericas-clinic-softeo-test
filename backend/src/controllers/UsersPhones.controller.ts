@@ -5,6 +5,12 @@ import IUserPhone from '../interfaces/userPhone.interface';
 class UsersPhones {
   public service: UsersPhonesService;
 
+  public userId!: number;
+
+  public phoneId!: number;
+
+  public type!: string;
+
   constructor() {
     this.service = new UsersPhonesService();
   }
@@ -33,6 +39,39 @@ class UsersPhones {
       });
 
       return res.status(201).json(createdUserPhone);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  public updateUserPhone = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId, phoneId, type } = req.params;
+
+      if (!userId || !phoneId || !type) {
+        return res.status(400)
+          .json({ message: 'Favor enviar userId, phoneId e type para buscar' });
+      };
+
+      this.userId = Number(userId);
+      this.phoneId = Number(phoneId);
+      this.type = type;
+
+      const updatingData = req.body;
+      if (!updatingData || !req.body) return res.status(400)
+        .json({ message: 'Favor enviar userId, phoneId e type para atualizar' });
+
+      await this.service.updateUserPhone(
+        {
+          userId: this.userId,
+          phoneId: this.phoneId,
+          type: this.type
+        },
+        updatingData
+      );
+
+      return res.status(200).json(updatingData)
     } catch (error) {
       console.log(error);
       next(error);
