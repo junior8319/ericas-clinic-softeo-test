@@ -87,6 +87,32 @@ class UsersPhones {
 
     return userPhoneToUpdate;
   };
+
+  public deleteUserPhone = async (userPhone: IUserPhone): Promise<IUserPhone | null> => {
+    if (
+      !userPhone ||
+      !userPhone.phoneId ||
+      !userPhone.userId ||
+      !userPhone.type
+    ) return null;
+
+    this.userId = userPhone.userId;
+    this.phoneId = userPhone.phoneId;
+    this.type = userPhone.type;
+
+    const userPhoneToDelete = await UserPhone.findOne({
+      where: {
+        userId: this.userId,
+        phoneId: this.phoneId,
+        type: this.type,
+      },
+    });
+    if (!userPhoneToDelete) return null;
+
+    await userPhoneToDelete.destroy();
+
+    return userPhoneToDelete;
+  };
 }
 
 export default UsersPhones;
