@@ -22,4 +22,10 @@ usersPhonesRouter.put(
   errorMiddleware.handleErrors,
 );
 
+usersPhonesRouter.delete(
+  '/usersPhones/:userId/:phoneId/:type',
+  UsersPhonesController.deleteUserPhone,
+  errorMiddleware.handleErrors,
+);
+
 export default usersPhonesRouter;
