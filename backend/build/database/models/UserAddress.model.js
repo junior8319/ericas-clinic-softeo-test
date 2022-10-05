@@ -10,6 +10,20 @@ const User_model_1 = __importDefault(require("./User.model"));
 class UserAddress extends sequelize_1.Model {
 }
 UserAddress.init({
+    userId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        references: {
+            model: 'users',
+            key: 'id',
+        },
+    },
+    publicPlaceId: {
+        type: sequelize_1.DataTypes.INTEGER,
+        references: {
+            model: 'publicPlaces',
+            key: 'id',
+        },
+    },
     addressNumber: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
@@ -31,6 +45,16 @@ UserAddress.init({
     modelName: 'userAddress',
     tableName: 'users_addresses',
 });
-User_model_1.default.belongsToMany(PublicPlace_model_1.default, { through: UserAddress });
-PublicPlace_model_1.default.belongsToMany(User_model_1.default, { through: UserAddress });
+User_model_1.default.belongsToMany(PublicPlace_model_1.default, {
+    foreignKey: 'userId',
+    otherKey: 'publicPlaceId',
+    through: UserAddress,
+    as: 'addresses'
+});
+PublicPlace_model_1.default.belongsToMany(User_model_1.default, {
+    foreignKey: 'publicPlaceId',
+    otherKey: 'userId',
+    through: UserAddress,
+    as: 'residents'
+});
 exports.default = UserAddress;

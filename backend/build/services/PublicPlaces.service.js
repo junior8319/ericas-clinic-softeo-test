@@ -15,13 +15,14 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Neighborhood_model_1 = __importDefault(require("../database/models/Neighborhood.model"));
 const PublicPlace_model_1 = __importDefault(require("../database/models/PublicPlace.model"));
+const User_model_1 = __importDefault(require("../database/models/User.model"));
 class PublicPlaces {
     constructor() {
         this.getPublicPlaces = () => __awaiter(this, void 0, void 0, function* () {
             const publicPlacesList = yield PublicPlace_model_1.default.findAll({
-                raw: true,
                 include: [
                     { model: Neighborhood_model_1.default, as: 'neighborhood', attributes: { exclude: ['id'] } },
+                    { model: User_model_1.default, as: 'residents', through: { attributes: [] }, attributes: { exclude: ['id', 'rg', 'cpf'] } },
                 ],
             });
             if (!publicPlacesList)

@@ -36,30 +36,55 @@ class UsersPhones {
             const newUserPhone = UserPhone_model_1.default.create(Object.assign({}, userPhone));
             return newUserPhone;
         });
-        this.updateUserPhone = (userPhone) => __awaiter(this, void 0, void 0, function* () {
+        this.updateUserPhone = (userPhone, dataToUpdate) => __awaiter(this, void 0, void 0, function* () {
             if (!userPhone ||
                 !userPhone.phoneId ||
                 !userPhone.type ||
-                !userPhone.userId)
+                !userPhone.userId ||
+                !dataToUpdate ||
+                !dataToUpdate.phoneId ||
+                !dataToUpdate.userId ||
+                !dataToUpdate.type)
                 return null;
-            this.phoneId = userPhone.phoneId;
-            this.type = userPhone.type;
-            this.userId = userPhone.userId;
+            this.phoneId = Number(dataToUpdate.phoneId);
+            this.type = dataToUpdate.type;
+            this.userId = dataToUpdate.userId;
             const userPhoneToUpdate = yield UserPhone_model_1.default.findOne({
                 where: {
-                    phoneId: this.phoneId,
-                    userId: this.userId,
-                    type: this.type,
+                    phoneId: userPhone.phoneId,
+                    userId: userPhone.userId,
+                    type: userPhone.type,
                 },
             });
             if (!userPhoneToUpdate)
                 return null;
             yield userPhoneToUpdate.update({
-                phoneId: userPhone.phoneId,
-                userId: userPhone.userId,
-                type: userPhone.type,
+                phoneId: dataToUpdate.phoneId,
+                userId: dataToUpdate.userId,
+                type: dataToUpdate.type,
             });
             return userPhoneToUpdate;
+        });
+        this.deleteUserPhone = (userPhone) => __awaiter(this, void 0, void 0, function* () {
+            if (!userPhone ||
+                !userPhone.phoneId ||
+                !userPhone.userId ||
+                !userPhone.type)
+                return null;
+            this.userId = userPhone.userId;
+            this.phoneId = userPhone.phoneId;
+            this.type = userPhone.type;
+            const userPhoneToDelete = yield UserPhone_model_1.default.findOne({
+                where: {
+                    userId: this.userId,
+                    phoneId: this.phoneId,
+                    type: this.type,
+                },
+            });
+            if (!userPhoneToDelete)
+                return null;
+            yield userPhoneToDelete.destroy();
+            return userPhoneToDelete;
         });
         UsersPhones.model = new UserPhone_model_1.default();
     }

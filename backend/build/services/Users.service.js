@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Attendance_model_1 = __importDefault(require("../database/models/Attendance.model"));
+const PublicPlace_model_1 = __importDefault(require("../database/models/PublicPlace.model"));
 const Role_model_1 = __importDefault(require("../database/models/Role.model"));
 const Telephone_model_1 = __importDefault(require("../database/models/Telephone.model"));
 const User_model_1 = __importDefault(require("../database/models/User.model"));
@@ -26,6 +27,18 @@ class Users {
                     { model: Attendance_model_1.default, as: 'appointments', attributes: { exclude: ['id'] } },
                     { model: Attendance_model_1.default, as: 'attendances', attributes: { exclude: ['id'] } },
                     { model: Telephone_model_1.default, as: 'telephones', through: { attributes: ['type'] } },
+                    {
+                        model: PublicPlace_model_1.default,
+                        as: 'addresses',
+                        through: {
+                            attributes: [
+                                'addressNumber',
+                                'addressComplement',
+                                'type',
+                                'addressCompInfo',
+                            ]
+                        },
+                    },
                 ],
             });
             if (!usersList)
