@@ -5,25 +5,25 @@ import errorMiddleware from '../middlewares/error.middleware';
 const usersPhonesRouter = Router();
 
 usersPhonesRouter.get(
-  '/usersPhones',
+  '/users-phones',
   UsersPhonesController.getUsersPhones,
   errorMiddleware.handleErrors
 );
 
 usersPhonesRouter.post(
-  '/usersPhones',
+  '/users-phones',
   UsersPhonesController.createUserPhone,
   errorMiddleware.handleErrors,
 );
 
 usersPhonesRouter.put(
-  '/usersPhones/:userId/:phoneId/:type',
+  '/users-phones/:userId/:phoneId/:type',
   UsersPhonesController.updateUserPhone,
   errorMiddleware.handleErrors,
 );
 
 usersPhonesRouter.delete(
-  '/usersPhones/:userId/:phoneId/:type',
+  '/users-phones/:userId/:phoneId/:type',
   UsersPhonesController.deleteUserPhone,
   errorMiddleware.handleErrors,
 );
