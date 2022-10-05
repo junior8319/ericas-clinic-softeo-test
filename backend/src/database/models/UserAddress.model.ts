@@ -4,6 +4,10 @@ import PublicPlace from './PublicPlace.model';
 import User from './User.model';
 
 class UserAddress extends Model {
+  public userId!: number;
+
+  public publicPlaceId!: number;
+
   public addressNumber!: number;
 
   public addressComplement!: string;
@@ -15,6 +19,20 @@ class UserAddress extends Model {
 
 UserAddress.init(
   {
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'users',
+        key: 'id',
+      },
+    },
+    publicPlaceId:{
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'publicPlaces',
+        key: 'id',
+      },
+    },
     addressNumber: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -39,7 +57,23 @@ UserAddress.init(
   }
 );
 
-User.belongsToMany(PublicPlace, { through: UserAddress, as: 'addresses' });
-PublicPlace.belongsToMany(User, { through: UserAddress, as: 'residents' });
+User.belongsToMany(
+  PublicPlace,
+  {
+    foreignKey: 'userId',
+    otherKey: 'publicPlaceId',
+    through: UserAddress,
+    as: 'addresses'
+  }
+);
+PublicPlace.belongsToMany(
+  User,
+  {
+    foreignKey: 'publicPlaceId',
+    otherKey: 'userId',
+    through: UserAddress,
+    as: 'residents'
+  }
+);
 
 export default UserAddress;
