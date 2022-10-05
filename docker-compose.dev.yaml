@@ -1,0 +1,58 @@
+version: '3.9'
+services:
+  frontend:
+    build: ./frontend
+    container_name: softeo_frontend_dev
+    depends_on: 
+      - backend
+    # healthcheck:
+    #   test: wget --no-verbose --tries=1 --spider http://localhost:3000 || exit 1
+    #   # interval: 20m
+    #   retries: 5
+    #   start_period: 20s
+    #   timeout: 30s
+    ports:
+      - published: 3000
+        target: 3000
+
+  backend:
+    image: node:16-alpine
+    container_name: softeo_backend_dev
+    working_dir: /src
+    volumes:
+      - ./backend/:/src
+    command: ["npm", "run", "debug"]
+    depends_on:
+      - database
+    environment:
+      - PORT=3001
+      - DB_HOST=database
+      - DB_NAME=ericas_clinic_dev
+      - DB_USER=root
+      - DB_PASS=123456
+      - DB_PORT=3306
+    # healthcheck:
+    #   test: wget --no-verbose --tries=1 --spider http://localhost:3001 || exit 1
+    #   # interval: 20m
+    #   timeout: 30s
+    #   retries: 5
+    #   start_period: 20s
+    ports:
+      - published: 3001
+        target: 3001
+
+  database:
+    image: mysql:8
+    container_name: softeo_database_dev
+    ports:
+      - published: 3307
+        target: 3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    restart: 'always'
+    # healthcheck:
+    #   test: mysqladmin ping -h localhost --port 3306 -uroot -p123456
+    #   # interval: 10m
+    #   timeout: 30s
+    #   retries: 5
+    #   start_period: 20s
