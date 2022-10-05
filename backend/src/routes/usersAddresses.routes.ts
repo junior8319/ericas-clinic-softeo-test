@@ -16,4 +16,10 @@ usersAddressesRouter.post(
   errorMiddleware.handleErrors,
 );
 
+usersAddressesRouter.put(
+  '/users-addresses/:userId/:publicPlaceId/:addressNumber',
+  UsersAddressesController.updateUserAddress,
+  errorMiddleware.handleErrors,
+);
+
 export default usersAddressesRouter;
