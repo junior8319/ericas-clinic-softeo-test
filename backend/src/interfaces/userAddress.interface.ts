@@ -1,4 +1,4 @@
-export default interface IUserAddressData {
+export default interface IUserAddress {
   addressNumber: number;
   addressComplement: string;
   type: string;
