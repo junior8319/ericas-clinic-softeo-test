@@ -6,6 +6,7 @@ module.exports = {
       address_number: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
       },
       address_complement: {
         type: Sequelize.STRING,
