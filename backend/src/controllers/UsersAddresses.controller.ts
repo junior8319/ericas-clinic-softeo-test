@@ -86,6 +86,39 @@ class UsersAddresses {
       next(error);
     }
   };
+
+  public deleteUserAddress = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId, publicPlaceId, addressNumber } = req.params;
+      this.userId = Number(userId);
+      this.publicPlaceId = Number(publicPlaceId);
+      this.addressNumber = Number(addressNumber);
+      if (!userId || !publicPlaceId || !addressNumber) {
+        return res.status(400)
+          .json({
+            message:
+              'Favor informar dados para buscar (userId, publicPlaceId, addressNumber',
+        });
+      }
+
+      const userAddressToDelete = {
+        userId: this.userId,
+        publicPlaceId: this.publicPlaceId,
+        addressNumber: this.addressNumber,
+      };
+
+      const userAddressDeleted = await this.service.deleteUserAddress(userAddressToDelete);
+      if (!userAddressDeleted) return res.status(404)
+        .json({
+          message: `Não encontramos registro com os dados ${userAddressToDelete}`
+      });
+      
+      return res.status(202).json({ message: 'Registro excluído com sucesso.' });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 export default new UsersAddresses();
