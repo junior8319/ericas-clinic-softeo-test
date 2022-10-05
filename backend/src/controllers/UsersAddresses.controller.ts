@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import IUserAddress from '../interfaces/userAddress.interface';
 import UsersAddressesService from '../services/UsersAddresses.service';
 
 class UsersAddresses {
@@ -23,6 +24,22 @@ class UsersAddresses {
         .json({ message: 'Não encontramos endereços associados a pessoas' });
 
       return res.status(200).json(usersAddressesList);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  public createUserAddress = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const newUserAddress = req.body;
+
+      const createdUserAddress: IUserAddress | null = await this.service.createUserAddress(newUserAddress);
+      if (!createdUserAddress) return res.status(400).json({
+        message: `Não foi possível associar com os dados ${newUserAddress}`
+      });
+
+      return res.status(201).json(createdUserAddress);
     } catch (error) {
       console.log(error);
       next(error);
