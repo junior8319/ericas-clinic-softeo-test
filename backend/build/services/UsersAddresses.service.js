@@ -35,6 +35,44 @@ class UsersAddresses {
             const newUserAddress = UserAddress_model_1.default.create(Object.assign({}, userAddress));
             return newUserAddress;
         });
+        this.updateUserAddress = (newData, prevData) => __awaiter(this, void 0, void 0, function* () {
+            if (!newData ||
+                !prevData ||
+                !prevData.userId ||
+                !prevData.publicPlaceId ||
+                !prevData.addressNumber)
+                return null;
+            const userAddressToUpdate = yield UserAddress_model_1.default.findOne({
+                where: {
+                    userId: prevData.userId,
+                    publicPlaceId: prevData.publicPlaceId,
+                    addressNumber: prevData.addressNumber,
+                },
+            });
+            if (!userAddressToUpdate)
+                return null;
+            if (newData.userId) {
+                yield userAddressToUpdate.update({ userId: newData.userId });
+            }
+            if (newData.publicPlaceId) {
+                yield userAddressToUpdate.update({
+                    publicPlaceId: newData.publicPlaceId
+                });
+            }
+            if (newData.addressNumber) {
+                yield userAddressToUpdate.update({ addressNumber: newData.addressNumber });
+            }
+            if (newData.type) {
+                yield userAddressToUpdate.update({ type: newData.type });
+            }
+            if (newData.addressComplement) {
+                yield userAddressToUpdate.update({ addressComplement: newData.addressComplement });
+            }
+            if (newData.addressCompInfo) {
+                yield userAddressToUpdate.update({ addressCompInfo: newData.addressCompInfo });
+            }
+            return userAddressToUpdate;
+        });
         UsersAddresses.model = new UserAddress_model_1.default();
     }
 }
@@ -45,8 +83,6 @@ UsersAddresses.userAddressExists = (receivedUserAddress) => __awaiter(void 0, vo
             userId: receivedUserAddress.userId,
             publicPlaceId: receivedUserAddress.publicPlaceId,
             addressNumber: receivedUserAddress.addressNumber,
-            addressComplement: receivedUserAddress.addressComplement,
-            addressCompInfo: receivedUserAddress.addressCompInfo,
             type: receivedUserAddress.type,
         },
     });

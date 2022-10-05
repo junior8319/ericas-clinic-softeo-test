@@ -43,6 +43,37 @@ class UsersAddresses {
                 next(error);
             }
         });
+        this.updateUserAddress = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { userId, publicPlaceId, addressNumber } = req.params;
+                this.userId = Number(userId);
+                this.publicPlaceId = Number(publicPlaceId);
+                this.addressNumber = Number(addressNumber);
+                const newData = req.body;
+                if (!userId || !publicPlaceId || !addressNumber) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar dados para buscar (userId, publicPlaceId, addressNumber',
+                    });
+                }
+                if (!newData) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar dados para atualizar',
+                    });
+                }
+                const updatedUserAddress = yield this.service.updateUserAddress(newData, {
+                    userId: this.userId,
+                    publicPlaceId: this.publicPlaceId,
+                    addressNumber: this.addressNumber,
+                });
+                return res.status(200).json(updatedUserAddress);
+            }
+            catch (error) {
+                console.log(error);
+                next(error);
+            }
+        });
         this.service = new UsersAddresses_service_1.default();
     }
 }

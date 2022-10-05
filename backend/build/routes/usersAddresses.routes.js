@@ -9,4 +9,5 @@ const error_middleware_1 = __importDefault(require("../middlewares/error.middlew
 const usersAddressesRouter = (0, express_1.Router)();
 usersAddressesRouter.get('/users-addresses', UsersAddresses_controller_1.default.getUsersAddresses, error_middleware_1.default.handleErrors);
 usersAddressesRouter.post('/users-addresses', UsersAddresses_controller_1.default.createUserAddress, error_middleware_1.default.handleErrors);
+usersAddressesRouter.put('/users-addresses/:userId/:publicPlaceId/:addressNumber', UsersAddresses_controller_1.default.updateUserAddress, error_middleware_1.default.handleErrors);
 exports.default = usersAddressesRouter;
