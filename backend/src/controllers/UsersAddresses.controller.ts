@@ -5,6 +5,10 @@ import UsersAddressesService from '../services/UsersAddresses.service';
 class UsersAddresses {
   public service: UsersAddressesService;
 
+  public userId!: number;
+
+  public publicPlaceId!: number;
+
   public addressNumber!: number;
 
   public addressComplement!: string;
@@ -40,6 +44,43 @@ class UsersAddresses {
       });
 
       return res.status(201).json(createdUserAddress);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  public updateUserAddress = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId, publicPlaceId, addressNumber } = req.params;
+      this.userId = Number(userId);
+      this.publicPlaceId = Number(publicPlaceId);
+      this.addressNumber = Number(addressNumber);
+      const newData = req.body;
+      if (!userId || !publicPlaceId || !addressNumber) {
+        return res.status(400)
+          .json({
+            message:
+              'Favor informar dados para buscar (userId, publicPlaceId, addressNumber',
+        });
+      }
+      if (!newData) {
+        return res.status(400)
+          .json({
+            message: 'Favor informar dados para atualizar',
+        });
+      }
+
+      const updatedUserAddress = await this.service.updateUserAddress(
+        newData,
+        { 
+          userId: this.userId,
+          publicPlaceId: this.publicPlaceId,
+          addressNumber: this.addressNumber,
+        },
+      );
+
+      return res.status(200).json(updatedUserAddress);
     } catch (error) {
       console.log(error);
       next(error);
