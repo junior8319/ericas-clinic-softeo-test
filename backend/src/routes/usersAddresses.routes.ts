@@ -10,4 +10,10 @@ usersAddressesRouter.get(
   errorMiddleware.handleErrors,
 );
 
+usersAddressesRouter.post(
+  '/users-addresses',
+  UsersAddressesController.createUserAddress,
+  errorMiddleware.handleErrors,
+);
+
 export default usersAddressesRouter;
