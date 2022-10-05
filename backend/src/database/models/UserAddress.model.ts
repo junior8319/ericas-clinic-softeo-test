@@ -39,7 +39,7 @@ UserAddress.init(
   }
 );
 
-User.belongsToMany(PublicPlace, { through: UserAddress });
-PublicPlace.belongsToMany(User, { through: UserAddress });
+User.belongsToMany(PublicPlace, { through: UserAddress, as: 'addresses' });
+PublicPlace.belongsToMany(User, { through: UserAddress, as: 'residents' });
 
 export default UserAddress;
