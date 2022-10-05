@@ -7,6 +7,7 @@ import {
   publicPlacesRouter,
   rolesRouter,
   telephonesRouter,
+  usersAddressesRouter,
   usersPhonesRouter,
   usersRouter
 } from '../routes/index.routes';
@@ -26,6 +27,7 @@ class App {
     this.app.use(usersRouter);
     this.app.use(attendancesRouter);
     this.app.use(usersPhonesRouter);
+    this.app.use(usersAddressesRouter);
     this.middlewares();
 
     this.app.get('/', (_req, res) => res.send('Hello, World!'));
