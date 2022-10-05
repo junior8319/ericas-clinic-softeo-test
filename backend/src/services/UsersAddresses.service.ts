@@ -4,14 +4,6 @@ import IUserAddress from "../interfaces/userAddress.interface";
 class UsersAddresses {
   static model: IUserAddress;
 
-  public addressNumber!: number;
-
-  public addressComplement!: string;
-
-  public type!: string;
-
-  public addressCompInfo!: string;
-
   constructor() {
     UsersAddresses.model = new UserAddress();
   }
@@ -52,6 +44,52 @@ class UsersAddresses {
 
     const newUserAddress = UserAddress.create({ ...userAddress });
     return newUserAddress;
+  };
+
+  public updateUserAddress = async (newData: IUserAddress, prevData: IUserAddress): Promise<IUserAddress | null> => {
+    if (!newData ||
+      !prevData ||
+      !prevData.userId ||
+      !prevData.publicPlaceId ||
+      !prevData.addressNumber
+    ) return null;
+
+    const userAddressToUpdate = await UserAddress.findOne({
+      where: {
+        userId: prevData.userId,
+        publicPlaceId: prevData.publicPlaceId,
+        addressNumber: prevData.addressNumber,
+      },
+    });
+    if (!userAddressToUpdate) return null;
+
+    if (newData.userId) {
+      await userAddressToUpdate.update({ userId: newData.userId });
+    }
+
+    if (newData.publicPlaceId) {
+      await userAddressToUpdate.update({
+        publicPlaceId: newData.publicPlaceId
+      });
+    }
+
+    if (newData.addressNumber) {
+      await userAddressToUpdate.update({ addressNumber: newData.addressNumber });
+    }
+
+    if (newData.type) {
+      await userAddressToUpdate.update({ type: newData.type });
+    }
+
+    if (newData.addressComplement) {
+      await userAddressToUpdate.update({ addressComplement: newData.addressComplement });
+    }
+
+    if (newData.addressCompInfo) {
+      await userAddressToUpdate.update({ addressCompInfo: newData.addressCompInfo });
+    }
+
+    return userAddressToUpdate;
   };
 }
 
