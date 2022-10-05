@@ -22,4 +22,10 @@ usersAddressesRouter.put(
   errorMiddleware.handleErrors,
 );
 
+usersAddressesRouter.delete(
+  '/users-addresses/:userId/:publicPlaceId/:addressNumber',
+  UsersAddressesController.deleteUserAddress,
+  errorMiddleware.handleErrors,
+);
+
 export default usersAddressesRouter;
