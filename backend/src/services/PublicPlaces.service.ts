@@ -1,5 +1,6 @@
 import Neighborhood from '../database/models/Neighborhood.model';
 import PublicPlace from '../database/models/PublicPlace.model';
+import User from '../database/models/User.model';
 import IPublicPlace from '../interfaces/publicPlace.interface';
 
 class PublicPlaces {
@@ -15,9 +16,9 @@ class PublicPlaces {
 
   public getPublicPlaces = async (): Promise<IPublicPlace[] | null> => {
     const publicPlacesList = await PublicPlace.findAll({
-      raw: true,
       include: [
         { model: Neighborhood, as: 'neighborhood', attributes: { exclude: ['id'] } },
+        { model: User, as: 'residents', through: { attributes: [] }, attributes: { exclude: ['id', 'rg', 'cpf'] }},
       ],
     });
     if (!publicPlacesList) return null;
