@@ -1,5 +1,5 @@
-import UserAddress from "../database/models/UserAddress.model";
-import IUserAddress from "../interfaces/userAddress.interface";
+import UserAddress from '../database/models/UserAddress.model';
+import IUserAddress from '../interfaces/userAddress.interface';
 
 class UsersAddresses {
   static model: IUserAddress;
@@ -90,6 +90,28 @@ class UsersAddresses {
     }
 
     return userAddressToUpdate;
+  };
+
+  public deleteUserAddress = async (receivedUserAddress: IUserAddress): Promise<IUserAddress | null> => {
+    if (
+      !receivedUserAddress ||
+      !receivedUserAddress.userId ||
+      !receivedUserAddress.publicPlaceId ||
+      !receivedUserAddress.addressNumber
+    ) return null;
+
+    const userAddressToDelete = await UserAddress.findOne({
+      where: {
+        userId: receivedUserAddress.userId,
+        publicPlaceId: receivedUserAddress.publicPlaceId,
+        addressNumber: receivedUserAddress.addressNumber,
+      },
+    });
+    if (!userAddressToDelete) return null;
+
+    await userAddressToDelete.destroy();
+
+    return userAddressToDelete;
   };
 }
 
