@@ -27,10 +27,12 @@ class Roles {
       const role = req.body;
 
       const createdRole: IRole | null = await this.service.createRole(role);
-      
       if (!createdRole) {
-        return res.status(400)
-          .json({ message: `Não foi possível criar a função com os dados: ${role}` });
+        return res.status(400).json({
+          message: `Não foi possível criar a função com os dados:`,
+          name: role.name,
+          type: role.type,
+        });
       }
 
       return res.status(201).json(createdRole);
@@ -43,10 +45,6 @@ class Roles {
   public updateRole = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-      if (!id) return res.status(400).json({ message: 'É necessário informar o identificador(id)' });
-
-      if (!req.body) return res.status(400).json({ message: 'Sem dado para atualizar' });
-
       const role = { ...req.body, id };
 
       await this.service.updateRole(role);
@@ -60,9 +58,7 @@ class Roles {
   public deleteRole = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
-
-      if (!id) return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
-
+      
       await this.service.deleteRole(id);
 
       return res.status(202).json({ message: 'Registro excluído com sucesso.' });
