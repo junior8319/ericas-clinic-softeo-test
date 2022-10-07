@@ -73,6 +73,24 @@ class UsersAddresses {
             }
             return userAddressToUpdate;
         });
+        this.deleteUserAddress = (receivedUserAddress) => __awaiter(this, void 0, void 0, function* () {
+            if (!receivedUserAddress ||
+                !receivedUserAddress.userId ||
+                !receivedUserAddress.publicPlaceId ||
+                !receivedUserAddress.addressNumber)
+                return null;
+            const userAddressToDelete = yield UserAddress_model_1.default.findOne({
+                where: {
+                    userId: receivedUserAddress.userId,
+                    publicPlaceId: receivedUserAddress.publicPlaceId,
+                    addressNumber: receivedUserAddress.addressNumber,
+                },
+            });
+            if (!userAddressToDelete)
+                return null;
+            yield userAddressToDelete.destroy();
+            return userAddressToDelete;
+        });
         UsersAddresses.model = new UserAddress_model_1.default();
     }
 }
