@@ -33,6 +33,13 @@ class Cities {
     return exists;
   };
 
+  static getCityById = async (id: number): Promise<ICity | null> => {
+    const foundCity = await City.findByPk(id);
+    if (!foundCity) return null;
+
+    return foundCity;
+  };
+
   public createCity = async (city: ICity): Promise<ICity | null> => {
     if (!city) return null;
 
