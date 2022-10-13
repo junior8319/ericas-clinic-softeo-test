@@ -57,8 +57,6 @@ class Countries {
         this.deleteCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                if (!id)
-                    return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
                 yield this.service.deleteCountry(id);
                 return res.status(202).json({ message: 'Registro excluído com sucesso.' });
             }

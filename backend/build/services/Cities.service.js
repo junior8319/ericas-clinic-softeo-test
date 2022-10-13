@@ -86,4 +86,10 @@ Cities.cityExists = (receivedName) => __awaiter(void 0, void 0, void 0, function
     const exists = !!city;
     return exists;
 });
+Cities.getCityById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const foundCity = yield City_model_1.default.findByPk(id);
+    if (!foundCity)
+        return null;
+    return foundCity;
+});
 exports.default = Cities;

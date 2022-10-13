@@ -10,6 +10,6 @@ const validateRoles_middleware_1 = __importDefault(require("../middlewares/valid
 const rolesRouter = (0, express_1.Router)();
 rolesRouter.get('/roles', Roles_controller_1.default.getRoles, error_middleware_1.default.handleErrors);
 rolesRouter.post('/roles', validateRoles_middleware_1.default.validateCreateRoles, Roles_controller_1.default.createRole, error_middleware_1.default.handleErrors);
-rolesRouter.put('/roles/:id', Roles_controller_1.default.updateRole, error_middleware_1.default.handleErrors);
-rolesRouter.delete('/roles/:id', Roles_controller_1.default.deleteRole, error_middleware_1.default.handleErrors);
+rolesRouter.put('/roles/:id', validateRoles_middleware_1.default.validateUpdateRole, Roles_controller_1.default.updateRole, error_middleware_1.default.handleErrors);
+rolesRouter.delete('/roles/:id', validateRoles_middleware_1.default.validateDeleteRole, Roles_controller_1.default.deleteRole, error_middleware_1.default.handleErrors);
 exports.default = rolesRouter;
