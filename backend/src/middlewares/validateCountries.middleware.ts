@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import CountriesService from '../services/Countries.service';
 
-class RolesMiddleware {
+class CountriesMiddleware {
   public app: express.Application;
   public service: CountriesService;
 
@@ -57,7 +57,7 @@ class RolesMiddleware {
       
       const { id } = req.params;
       if (!id || !Number(id)) return res.status(400)
-      .json({ message: 'Por favor, nos passe um identificador(id) numérico para excluir.' });
+      .json({ message: 'Por favor, nos passe um identificador(id) numérico para atualizar.' });
       
       const foundCountry = await CountriesService.getCountryById(Number(id));
       if (!foundCountry) return res.status(400)  
@@ -93,6 +93,7 @@ class RolesMiddleware {
         ' Favor informar id válido',
       });  
 
+      next();
     } catch (error) {
       console.log(error);
       next(error);      
@@ -100,4 +101,4 @@ class RolesMiddleware {
   };
 }
 
-export default new RolesMiddleware;
+export default new CountriesMiddleware;
