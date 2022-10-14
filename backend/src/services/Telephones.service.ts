@@ -11,6 +11,8 @@ class Telephones {
 
   public id!: number;
 
+  public cityId!: number;
+
   constructor() {
     Telephones.model = new Telephone();
   }
@@ -27,11 +29,12 @@ class Telephones {
     return telephonesList;
   };
 
-  static telephoneExists = async (receivedPrefix: number, receivedNumber: number): Promise<boolean> => {
+  static telephoneExists = async (receivedPrefix: number, receivedNumber: number, cityId: number): Promise<boolean> => {
     const telephone = await Telephone.findOne({
       where: {
         prefix: receivedPrefix,
         number: receivedNumber,
+        cityId: cityId,
       },
     });
 
@@ -45,8 +48,9 @@ class Telephones {
 
     this.prefix = telephone.prefix;
     this.number = telephone.number;
+    this.cityId = telephone.cityId;
     
-    const telephoneExists = await Telephones.telephoneExists(this.prefix, this.number);
+    const telephoneExists = await Telephones.telephoneExists(this.prefix, this.number, this.cityId);
     if (telephoneExists) return null;
 
     const createdTelephone = await Telephone.create({ ...telephone });
