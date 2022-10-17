@@ -47,6 +47,7 @@ class RolesMiddleware {
       const { name, type } = roleToUpdate;
       const roleExists = await RolesService.roleExists(name);
 
+      if (!name) return next();
       if (roleExists) return res.status(400)
         .json({ message: `Já existe função com o nome ${name}` });
 
