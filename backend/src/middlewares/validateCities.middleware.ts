@@ -101,12 +101,12 @@ class CitiesMiddleware {
         .json({ message: 'Por favor, nos passe um identificador(id) numérico para excluir.' });
 
       const foundCity = await CitiesService.getCityById(Number(id));
-      // if (!foundCity) return res.status(400)  
-      //   .json({
-      //     message:
-      //     `Identificador informado (id: ${id}) não encontrado.` +
-      //     ' Favor informar id válido',
-      //   });
+      if (!foundCity) return res.status(400)  
+        .json({
+          message:
+          `Identificador informado (id: ${id}) não encontrado.` +
+          ' Favor informar id válido',
+        });
 
       next();
     } catch (error) {
