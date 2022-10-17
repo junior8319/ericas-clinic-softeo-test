@@ -77,9 +77,8 @@ class CountriesMiddleware {
         });
         this.validateDeleteCountry = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(req);
                 const { id } = req.params;
-                if (!req || !id || !Number(id))
+                if (!id || !Number(id))
                     return res.status(400)
                         .json({ message: 'Por favor, nos passe um identificador(id) numérico para excluir.' });
                 const foundCountry = yield Countries_service_1.default.getCountryById(Number(id));
