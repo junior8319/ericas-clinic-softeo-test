@@ -58,9 +58,15 @@ class CitiesMiddleware {
   public validateUpdateCity = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const cityToUpdate = req.body;
-      const { name, phoneCode, state } = cityToUpdate;
+      const { name, phoneCode, state, countryId } = cityToUpdate;
       
-      if (!cityToUpdate || !name && !phoneCode && !state) return res.status(400)
+      if (
+        !cityToUpdate ||
+        !name &&
+        !phoneCode &&
+        !state &&
+        !countryId
+      ) return res.status(400)
       .json({ message: 'Sem dado para atualizar' });
       
       const { id } = req.params;
@@ -69,12 +75,13 @@ class CitiesMiddleware {
       
       const foundCity = await CitiesService.getCityById(Number(id));
       if (!foundCity) return res.status(400)  
-      .json({
-        message:
-        `Identificador informado (id: ${id}) não encontrado.` +
-        ' Favor informar id válido',
+        .json({
+          message:
+          `Identificador informado (id: ${id}) não encontrado.` +
+          ' Favor informar id válido',
       });  
       
+      if (!name) return next();
       const cityExists = await CitiesService.cityExists(name);
       if (cityExists) return res.status(400)  
         .json({ message: `Já existe cidade com o nome ${name}` });
@@ -94,12 +101,12 @@ class CitiesMiddleware {
         .json({ message: 'Por favor, nos passe um identificador(id) numérico para excluir.' });
 
       const foundCity = await CitiesService.getCityById(Number(id));
-      if (!foundCity) return res.status(400)  
-      .json({
-        message:
-        `Identificador informado (id: ${id}) não encontrado.` +
-        ' Favor informar id válido',
-      });
+      // if (!foundCity) return res.status(400)  
+      //   .json({
+      //     message:
+      //     `Identificador informado (id: ${id}) não encontrado.` +
+      //     ' Favor informar id válido',
+      //   });
 
       next();
     } catch (error) {
