@@ -67,9 +67,13 @@ class CountriesMiddleware {
         ' Favor informar id válido',
       });  
       
+      if (!name) return next(); 
       const countryExists = await CountriesService.countryExists(name);
       if (countryExists) return res.status(400)  
-        .json({ message: `Já existe país com o nome ${name}` });
+        .json({
+          message: `Já existe país com o nome ${name}` +
+            ' ou já está com o nome atualizado.'
+        });
   
       next();
       } catch (error) {
