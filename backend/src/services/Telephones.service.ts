@@ -29,6 +29,14 @@ class Telephones {
     return telephonesList;
   };
 
+  static getPhoneById = async (receivedId: number): Promise<ITelephone | null> => {
+    const telephone = await Telephone.findByPk(receivedId);
+    
+    if (!telephone) return null;
+
+    return telephone;
+  };
+
   static telephoneExists = async (receivedPrefix: number, receivedNumber: number, cityId: number): Promise<boolean> => {
     const telephone = await Telephone.findOne({
       where: {
@@ -62,7 +70,6 @@ class Telephones {
     if (!telephone) return null;
 
     if (telephone.id) this.id = telephone.id;
-
     const telephoneToUpdate = await Telephone.findOne({ where: { id: this.id }});
     if (!telephoneToUpdate) return null;
 
