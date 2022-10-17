@@ -19,7 +19,6 @@ class Telephones {
 
   public getTelephones = async (): Promise<ITelephone[] | null> => {
     const telephonesList = await Telephone.findAll({
-      raw: true,
       include: [
         { model: City, as: 'city' },
       ],
