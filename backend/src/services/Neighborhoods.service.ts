@@ -1,5 +1,4 @@
 import City from '../database/models/City.model';
-import Country from '../database/models/Country.model';
 import Neighborhood from '../database/models/Neighborhood.model';
 import INeighborhood from '../interfaces/neighborhood.interface';
 
