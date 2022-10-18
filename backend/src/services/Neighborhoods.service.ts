@@ -39,6 +39,14 @@ class Neighborhoods {
     return exists;
   };
 
+  static getById = async (receivedId: number): Promise<INeighborhood | null> => {
+    const neighborhood = await Neighborhood.findByPk(receivedId);
+
+    if (!neighborhood) return null;
+
+    return neighborhood;
+  };
+
   public createNeighborhood = async (neighborhood: INeighborhood): Promise<INeighborhood | null> => {
     if (!neighborhood) return null;
 
