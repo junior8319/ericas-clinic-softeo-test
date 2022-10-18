@@ -10,13 +10,14 @@ class Neighborhoods {
 
   public id!: number;
 
+  public cityId!: number;
+
   constructor() {
     Neighborhoods.model = new Neighborhood();
   }
 
   public getNeighborhoods = async (): Promise<INeighborhood[] | null> => {
     const neighborhoods = await Neighborhood.findAll({
-      raw: true,
       include: [
         { model: City, as: 'city', attributes: { exclude: ['id'] } },
       ],
@@ -26,9 +27,12 @@ class Neighborhoods {
     return neighborhoods;
   };
 
-  static neighborhoodExists = async (receivedName: string): Promise<boolean> => {
+  static neighborhoodExists = async (receivedName: string, receivedCityId: number): Promise<boolean> => {
     const neighborhood = await Neighborhood.findOne({
-      where: { name: receivedName },
+      where: {
+        name: receivedName,
+        cityId: receivedCityId,
+      },
     });
 
     const exists = !!neighborhood;
@@ -37,11 +41,12 @@ class Neighborhoods {
   };
 
   public createNeighborhood = async (neighborhood: INeighborhood): Promise<INeighborhood | null> => {
-    if (!Neighborhood) return null;
+    if (!neighborhood) return null;
 
-    this.name = Neighborhood.name;
+    this.name = neighborhood.name;
+    this.cityId = neighborhood.cityId;
     
-    const neighborhoodExists = await Neighborhoods.neighborhoodExists(this.name);
+    const neighborhoodExists = await Neighborhoods.neighborhoodExists(this.name, this.cityId);
     if (neighborhoodExists) return null;
 
     const createdNeighborhood = await Neighborhood.create({ ...neighborhood });
