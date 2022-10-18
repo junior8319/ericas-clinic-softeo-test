@@ -52,7 +52,6 @@ class TelephonesMiddleware {
   public validateUpdatePhone = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const phoneToUpdate = req.body;
-      console.log('PHONETOUPDATE', phoneToUpdate);
       const { prefix, number, cityId } = phoneToUpdate;
 
       if (!phoneToUpdate || !prefix && !number && !cityId) return res.status(400)
