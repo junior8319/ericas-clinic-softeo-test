@@ -10,6 +10,8 @@ class NeighborhoodsMiddleware {
 
   public cityId!: number;
 
+  public id!: number;
+
   constructor() {
     this.app = express();
     this.service = new NeighborhoodsService();
@@ -45,6 +47,44 @@ class NeighborhoodsMiddleware {
           message:
             `Já existe bairro com o nome com os dados: ${neighborhoodToCreate}`
         });
+
+      next();
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  public validateUpdateNeighborhood = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const neighborhoodToUpdate = req.body;
+      const { name, cityId } = neighborhoodToUpdate;
+
+      if (!neighborhoodToUpdate || !name && !cityId) return res.status(400)
+        .json({ message: 'Sem dado para atualizar.' });
+      
+      const { id } = req.params;
+      if (!id || !Number(id)) return res.status(400)
+        .json({
+          message:
+            'Por favor, nos informe um identificador (id) numérico para atualizar.',
+        });
+      
+      this.id = Number(id);
+      const foundNeighborhood = await NeighborhoodsService.getById(this.id);
+      if (!foundNeighborhood) return res.status(400)
+        .json({
+          message:
+            `Identificador informado (id: ${id}) não encontrado` +
+            ' Favor informar id válido',
+        });
+
+      if (!name || !cityId) return next();
+      const neighborhoodExists = await NeighborhoodsService.neighborhoodExists(name, cityId);
+      if (neighborhoodExists) return res.status(400)
+        .json({
+          message: 'Já existe registro com esses dados, verifique por favor.',
+      });
 
       next();
     } catch (error) {
