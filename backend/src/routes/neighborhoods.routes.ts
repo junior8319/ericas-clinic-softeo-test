@@ -18,6 +18,7 @@ neighborhoodsRouter.post(
 );
 neighborhoodsRouter.put(
   '/neighborhoods/:id',
+  NeighborhoodMiddleware.validateUpdateNeighborhood,
   NeighborhoodsController.updateNeighborhood,
   errorMiddleware.handleErrors
 );
