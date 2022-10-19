@@ -24,6 +24,7 @@ neighborhoodsRouter.put(
 );
 neighborhoodsRouter.delete(
   '/neighborhoods/:id',
+  NeighborhoodMiddleware.validateDeleteNeighborhood,
   NeighborhoodsController.deleteNeighborhood,
   errorMiddleware.handleErrors
 );
