@@ -47,6 +47,8 @@ class RolesMiddleware {
                 const roleToUpdate = req.body;
                 const { name, type } = roleToUpdate;
                 const roleExists = yield Roles_service_1.default.roleExists(name);
+                if (!name)
+                    return next();
                 if (roleExists)
                     return res.status(400)
                         .json({ message: `Já existe função com o nome ${name}` });

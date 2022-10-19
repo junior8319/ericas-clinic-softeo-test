@@ -19,7 +19,6 @@ class Telephones {
     constructor() {
         this.getTelephones = () => __awaiter(this, void 0, void 0, function* () {
             const telephonesList = yield Telephone_model_1.default.findAll({
-                raw: true,
                 include: [
                     { model: City_model_1.default, as: 'city' },
                 ],
@@ -78,6 +77,12 @@ class Telephones {
     }
 }
 _a = Telephones;
+Telephones.getPhoneById = (receivedId) => __awaiter(void 0, void 0, void 0, function* () {
+    const telephone = yield Telephone_model_1.default.findByPk(receivedId);
+    if (!telephone)
+        return null;
+    return telephone;
+});
 Telephones.telephoneExists = (receivedPrefix, receivedNumber, cityId) => __awaiter(void 0, void 0, void 0, function* () {
     const telephone = yield Telephone_model_1.default.findOne({
         where: {

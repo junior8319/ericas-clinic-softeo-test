@@ -19,7 +19,6 @@ class Cities {
     constructor() {
         this.getCities = () => __awaiter(this, void 0, void 0, function* () {
             const cities = yield City_model_1.default.findAll({
-                raw: true,
                 include: { model: Country_model_1.default, as: 'country', attributes: { exclude: ['id'] } },
             });
             if (!cities)

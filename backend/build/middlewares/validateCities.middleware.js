@@ -54,8 +54,12 @@ class CitiesMiddleware {
         this.validateUpdateCity = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const cityToUpdate = req.body;
-                const { name, phoneCode, state } = cityToUpdate;
-                if (!cityToUpdate || !name && !phoneCode && !state)
+                const { name, phoneCode, state, countryId } = cityToUpdate;
+                if (!cityToUpdate ||
+                    !name &&
+                        !phoneCode &&
+                        !state &&
+                        !countryId)
                     return res.status(400)
                         .json({ message: 'Sem dado para atualizar' });
                 const { id } = req.params;
@@ -69,6 +73,8 @@ class CitiesMiddleware {
                         message: `Identificador informado (id: ${id}) não encontrado.` +
                             ' Favor informar id válido',
                     });
+                if (!name)
+                    return next();
                 const cityExists = yield Cities_service_1.default.cityExists(name);
                 if (cityExists)
                     return res.status(400)
