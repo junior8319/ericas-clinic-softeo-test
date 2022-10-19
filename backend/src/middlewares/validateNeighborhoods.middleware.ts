@@ -92,6 +92,30 @@ class NeighborhoodsMiddleware {
       next(error);
     }
   };
+
+  public validateDeleteNeighborhood = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      if (!id || !Number(id)) return res.status(400)
+        .json({
+          message:
+            'Por favor, nos informe um identificador (id) numérico para atualizar.',
+        });
+
+      const foundNeighborhood = await NeighborhoodsService.getById(Number(id));
+      if (!foundNeighborhood) return res.status(400)
+        .json({
+          message:
+            `Identificador (id: ${id}) não corresponde a nenhum registro` +
+            ' Favor informar id válido para excluir.',
+        });
+      
+      next();
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 export default new NeighborhoodsMiddleware();
