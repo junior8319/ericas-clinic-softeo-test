@@ -28,6 +28,14 @@ class PublicPlaces {
     return publicPlacesList;
   };
 
+  static getPubPlaceById = async (receivedId: number): Promise<IPublicPlace | null> => {
+    const publicPlace = await PublicPlace.findByPk(receivedId);
+
+    if (!publicPlace) return null;
+
+    return publicPlace;
+  };
+
   static publicPlaceExists = async (
     receivedName: string,
     receivedNeighborhoodId: Number
