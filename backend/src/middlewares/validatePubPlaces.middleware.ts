@@ -37,7 +37,8 @@ class PublicPlacesMiddleware {
           .json({
             message:
               'Você deve informar o bairro (neighborhoodId) onde' +
-              ' se localiza o logradouro (rua, av., etc.).'
+              ' se localiza o logradouro (rua, av., etc.).' +
+              ' Deve ser um dado numérico.'
           });
       }
 
@@ -51,6 +52,8 @@ class PublicPlacesMiddleware {
           message:
             'Você deve informar o tipo (type) de logradouro (rua, av., etc.).'
         });
+
+      next();
     } catch (error) {
       console.log(error);
       next(error);
