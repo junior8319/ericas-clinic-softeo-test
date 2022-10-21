@@ -59,6 +59,46 @@ class PublicPlacesMiddleware {
       next(error);
     }
   };
+
+  public validateUpdatePublicPlace = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const pubPlaceToUpdate = req.body;
+      const { name, type, neighborhoodId } = pubPlaceToUpdate;
+
+      if (!pubPlaceToUpdate || !name && !neighborhoodId) return res.status(400)
+        .json({ message: 'Sem dado para atualizar.' })
+      
+      const { id } = req.params;
+      if (!id || !Number(id)) return res.status(400)
+        .json({
+          message:
+            'Por favor, nos informe um identificador (id) numérico para atualizar.'
+        });
+      
+      this.id = Number(id);
+      const foundPublicPlace = await PublicPlacesService.getPubPlaceById(this.id);
+      if (!foundPublicPlace) return res.status(400)
+        .json({
+          message:
+            `Identificador (id: ${this.id} não corresponde` +
+            ' a registros presentes no banco.' +
+            ' Favor informar id válido.',
+        });
+      
+      if (!name || !neighborhoodId) return next();
+      const publicPlaceExists = await PublicPlacesService
+        .publicPlaceExists(name, neighborhoodId);
+      if (publicPlaceExists) return res.status(400)
+        .json({
+          message: 'Já existe registro com esses dados, verifique por favor.',
+        });
+
+      next();
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 export default new PublicPlacesMiddleware();
