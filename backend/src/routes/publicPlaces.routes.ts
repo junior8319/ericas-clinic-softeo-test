@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import PublicPlacesController from '../controllers/PublicPlaces.controller';
+import PublicPlacesMiddleware from '../middlewares/validatePubPlaces.middleware';
 import errorMiddleware from '../middlewares/error.middleware';
 
 const publicPlacesRouter = Router();
@@ -12,6 +13,7 @@ publicPlacesRouter.get(
 
 publicPlacesRouter.post(
   '/public-places',
+  PublicPlacesMiddleware.validateCreatePublicPlace,
   PublicPlacesController.createPublicPlace,
   errorMiddleware.handleErrors,
 );
