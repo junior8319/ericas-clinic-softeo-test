@@ -20,6 +20,7 @@ publicPlacesRouter.post(
 
 publicPlacesRouter.put(
   '/public-places/:id',
+  PublicPlacesMiddleware.validateUpdatePublicPlace,
   PublicPlacesController.updatePublicPlace,
   errorMiddleware.handleErrors,
 );
