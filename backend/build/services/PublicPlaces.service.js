@@ -33,7 +33,9 @@ class PublicPlaces {
             if (!publicPlace)
                 return null;
             this.name = publicPlace.name;
-            const publicPlaceExists = yield PublicPlaces.publicPlaceExists(this.name);
+            this.neighborhoodId = publicPlace.neighborhoodId;
+            const publicPlaceExists = yield PublicPlaces
+                .publicPlaceExists(this.name, this.neighborhoodId);
             if (publicPlaceExists)
                 return null;
             const createdPublicPlace = yield PublicPlace_model_1.default.create(Object.assign({}, publicPlace));
@@ -77,9 +79,18 @@ class PublicPlaces {
     }
 }
 _a = PublicPlaces;
-PublicPlaces.publicPlaceExists = (receivedName) => __awaiter(void 0, void 0, void 0, function* () {
+PublicPlaces.getPubPlaceById = (receivedId) => __awaiter(void 0, void 0, void 0, function* () {
+    const publicPlace = yield PublicPlace_model_1.default.findByPk(receivedId);
+    if (!publicPlace)
+        return null;
+    return publicPlace;
+});
+PublicPlaces.publicPlaceExists = (receivedName, receivedNeighborhoodId) => __awaiter(void 0, void 0, void 0, function* () {
     const publicPlace = yield PublicPlace_model_1.default.findOne({
-        where: { name: receivedName },
+        where: {
+            name: receivedName,
+            neighborhoodId: receivedNeighborhoodId
+        },
     });
     const exists = !!publicPlace;
     return exists;

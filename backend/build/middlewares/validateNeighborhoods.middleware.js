@@ -96,7 +96,7 @@ class NeighborhoodsMiddleware {
                 if (!foundNeighborhood)
                     return res.status(400)
                         .json({
-                        message: `Identificador (id: ${id} não corresponde a nenhum registro` +
+                        message: `Identificador (id: ${id}) não corresponde a nenhum registro` +
                             ' Favor informar id válido para excluir.',
                     });
                 next();
