@@ -88,6 +88,31 @@ class PublicPlacesMiddleware {
                 next(error);
             }
         });
+        this.validateDeletePublicPlace = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                if (!id || !Number(id))
+                    return res.status(400)
+                        .json({
+                        message: 'Por favor, nos informe um identificador' +
+                            ' (id) numérico para excluir.',
+                    });
+                this.id = Number(id);
+                const foundPublicPlace = yield PublicPlaces_service_1.default.getPubPlaceById(Number(id));
+                if (!foundPublicPlace)
+                    res.status(400)
+                        .json({
+                        message: `Identificador informado (id: ${this.id} não corresponde` +
+                            ' a nenhum logradouro cadastrado.' +
+                            'Favor informar um id existente.',
+                    });
+                next();
+            }
+            catch (error) {
+                console.log(error);
+                next(error);
+            }
+        });
         this.app = (0, express_1.default)();
         this.service = new PublicPlaces_service_1.default();
     }
