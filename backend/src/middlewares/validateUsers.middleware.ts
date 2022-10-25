@@ -94,6 +94,54 @@ class UsersMiddleware {
       next(error);
     }
   };
+
+  public validateUpdateUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userToUpdate = req.body;
+      const { name, birthDate, cpf, rg, roleId } = userToUpdate;
+
+      if (
+        !userToUpdate ||
+        !name &&
+        !birthDate &&
+        !cpf &&
+        !rg &&
+        !roleId
+      ) {
+        return res.status(400).json({
+          message: 'Sem dado para atualizar'
+        });
+      }
+
+      const { id } = req.params;
+      if (!id || !Number(id)) return res.status(400)
+        .json({
+          message:
+            'Por favor, nos informe um identificador(id)' +
+            ' numérico para atualizar',
+        });
+
+      this.id = Number(id);
+      const foundUser = await UsersService.getUserById(this.id);
+      if (!foundUser) return res.status(400)
+        .json({
+          message:
+            `Não temos registro com este identificador (id: ${this.id}` +
+            ' em nosso banco de dados. Favor informar id válido.'
+        });
+      
+      if (!cpf) return next();
+      this.cpf = cpf;
+      const userExists = await UsersService.userExists(this.cpf);
+      if (userExists) return res.status(400)
+        .json({ message: `Já existe pessoa cadastrada com o cpf ${cpf}` });
+      
+      next();
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 export default new UsersMiddleware();

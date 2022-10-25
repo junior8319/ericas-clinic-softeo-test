@@ -79,7 +79,7 @@ class CitiesMiddleware {
           message:
           `Identificador informado (id: ${id}) não encontrado.` +
           ' Favor informar id válido',
-      });  
+        });  
       
       if (!name) return next();
       const cityExists = await CitiesService.cityExists(name);
