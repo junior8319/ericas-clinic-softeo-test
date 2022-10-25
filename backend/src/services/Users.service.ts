@@ -12,6 +12,8 @@ class Users {
 
   public name!: string;
 
+  public cpf!: string;
+
   constructor() {
     Users.model = new User();
   }
@@ -42,9 +44,9 @@ class Users {
     return usersList;
   };
 
-  static userExists = async (receivedName: string): Promise<boolean> => {
+  static userExists = async (receivedCpf: string): Promise<boolean> => {
     const user = await User.findOne({
-      where: { name: receivedName },
+      where: { cpf: receivedCpf },
     });
 
     const exists = !!user;
@@ -55,9 +57,9 @@ class Users {
   public createUser = async (user: IUser): Promise<IUser | null> => {
     if (!user) return null;
 
-    this.name = user.name;
+    this.cpf = user.cpf;
 
-    const userExists = await Users.userExists(this.name);
+    const userExists = await Users.userExists(this.cpf);
     if (userExists) return null;
 
     const createdUser = User.create({ ...user });
