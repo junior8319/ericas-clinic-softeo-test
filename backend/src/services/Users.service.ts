@@ -54,6 +54,13 @@ class Users {
     return exists;
   };
 
+  static getUserById = async (receivedId: number): Promise<IUser | null> => {
+    const user = await User.findByPk(receivedId);
+    if (!user) return null;
+
+    return user;
+  };
+
   public createUser = async (user: IUser): Promise<IUser | null> => {
     if (!user) return null;
 
