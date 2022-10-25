@@ -20,6 +20,7 @@ usersRouter.post(
 
 usersRouter.put(
   '/users/:id',
+  UsersMiddleware.validateUpdateUser,
   UsersController.updateUser,
   errorMiddleware.handleErrors,
 );
