@@ -19,7 +19,6 @@ class Telephones {
     constructor() {
         this.getTelephones = () => __awaiter(this, void 0, void 0, function* () {
             const telephonesList = yield Telephone_model_1.default.findAll({
-                raw: true,
                 include: [
                     { model: City_model_1.default, as: 'city' },
                 ],
@@ -33,7 +32,8 @@ class Telephones {
                 return null;
             this.prefix = telephone.prefix;
             this.number = telephone.number;
-            const telephoneExists = yield Telephones.telephoneExists(this.prefix, this.number);
+            this.cityId = telephone.cityId;
+            const telephoneExists = yield Telephones.telephoneExists(this.prefix, this.number, this.cityId);
             if (telephoneExists)
                 return null;
             const createdTelephone = yield Telephone_model_1.default.create(Object.assign({}, telephone));
@@ -77,11 +77,18 @@ class Telephones {
     }
 }
 _a = Telephones;
-Telephones.telephoneExists = (receivedPrefix, receivedNumber) => __awaiter(void 0, void 0, void 0, function* () {
+Telephones.getPhoneById = (receivedId) => __awaiter(void 0, void 0, void 0, function* () {
+    const telephone = yield Telephone_model_1.default.findByPk(receivedId);
+    if (!telephone)
+        return null;
+    return telephone;
+});
+Telephones.telephoneExists = (receivedPrefix, receivedNumber, cityId) => __awaiter(void 0, void 0, void 0, function* () {
     const telephone = yield Telephone_model_1.default.findOne({
         where: {
             prefix: receivedPrefix,
             number: receivedNumber,
+            cityId: cityId,
         },
     });
     const exists = !!telephone;

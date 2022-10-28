@@ -1,5 +1,4 @@
 import City from '../database/models/City.model';
-import Country from '../database/models/Country.model';
 import Neighborhood from '../database/models/Neighborhood.model';
 import INeighborhood from '../interfaces/neighborhood.interface';
 
@@ -10,13 +9,14 @@ class Neighborhoods {
 
   public id!: number;
 
+  public cityId!: number;
+
   constructor() {
     Neighborhoods.model = new Neighborhood();
   }
 
   public getNeighborhoods = async (): Promise<INeighborhood[] | null> => {
     const neighborhoods = await Neighborhood.findAll({
-      raw: true,
       include: [
         { model: City, as: 'city', attributes: { exclude: ['id'] } },
       ],
@@ -26,9 +26,12 @@ class Neighborhoods {
     return neighborhoods;
   };
 
-  static neighborhoodExists = async (receivedName: string): Promise<boolean> => {
+  static neighborhoodExists = async (receivedName: string, receivedCityId: number): Promise<boolean> => {
     const neighborhood = await Neighborhood.findOne({
-      where: { name: receivedName },
+      where: {
+        name: receivedName,
+        cityId: receivedCityId,
+      },
     });
 
     const exists = !!neighborhood;
@@ -36,12 +39,21 @@ class Neighborhoods {
     return exists;
   };
 
-  public createNeighborhood = async (neighborhood: INeighborhood): Promise<INeighborhood | null> => {
-    if (!Neighborhood) return null;
+  static getById = async (receivedId: number): Promise<INeighborhood | null> => {
+    const neighborhood = await Neighborhood.findByPk(receivedId);
 
-    this.name = Neighborhood.name;
+    if (!neighborhood) return null;
+
+    return neighborhood;
+  };
+
+  public createNeighborhood = async (neighborhood: INeighborhood): Promise<INeighborhood | null> => {
+    if (!neighborhood) return null;
+
+    this.name = neighborhood.name;
+    this.cityId = neighborhood.cityId;
     
-    const neighborhoodExists = await Neighborhoods.neighborhoodExists(this.name);
+    const neighborhoodExists = await Neighborhoods.neighborhoodExists(this.name, this.cityId);
     if (neighborhoodExists) return null;
 
     const createdNeighborhood = await Neighborhood.create({ ...neighborhood });

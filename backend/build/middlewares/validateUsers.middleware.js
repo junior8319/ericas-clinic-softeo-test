@@ -1,0 +1,84 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const Users_service_1 = __importDefault(require("../services/Users.service"));
+class UsersMiddleware {
+    constructor() {
+        this.validateCreateUser = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userToCreate = req.body;
+                if (!userToCreate || Object.keys(userToCreate).length === 0) {
+                    return res.status(400).json({ message: 'Nenhum dado recebido.' });
+                }
+                const { cpf } = userToCreate;
+                this.cpf = cpf;
+                if (!this.cpf || this.cpf.length === 0 || !this.cpf.length) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar o número de cpf da pessoa usuária (campo "cpf")',
+                    });
+                }
+                const userExists = yield Users_service_1.default.userExists(this.cpf);
+                if (userExists)
+                    return res.status(400)
+                        .json({
+                        message: `Já existe pessoa usuária com o cpf número ${this.cpf}`
+                    });
+                const { name } = userToCreate;
+                this.name = name;
+                if (!this.name || !this.name.length || this.name.length === 0) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar o nome da pessoa usuária (campo "name")',
+                    });
+                }
+                const { birthDate } = userToCreate;
+                this.birthDate = birthDate;
+                if (!this.birthDate || !this.birthDate.toLocaleDateString('pt-BR')) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar uma data de nascimento (campo "birthDate")' +
+                            ' no formato "dd/mm/aaa"',
+                    });
+                }
+                const { rg } = userToCreate;
+                this.rg = rg;
+                if (!this.rg || !this.rg.length || this.rg.length === 0) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar uma data de nascimento (campo "rg")',
+                    });
+                }
+                const { roleId } = userToCreate;
+                this.roleId = Number(roleId);
+                if (!this.roleId || !Number(roleId)) {
+                    return res.status(400)
+                        .json({
+                        message: 'Favor informar a função da pessoa usuária' +
+                            ' (campo "roleId") numérico.'
+                    });
+                }
+                next();
+            }
+            catch (error) {
+                console.log(error);
+                next(error);
+            }
+        });
+        this.app = (0, express_1.default)();
+        this.service = new Users_service_1.default();
+    }
+}
+exports.default = new UsersMiddleware();

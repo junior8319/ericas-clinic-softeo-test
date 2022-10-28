@@ -19,6 +19,13 @@ class Countries {
     return countries;
   };
 
+  static getCountryById = async (id: number): Promise<ICountry | null> => {
+    const foundCountry = await Country.findByPk(id);
+    if (!foundCountry) return null;
+
+    return foundCountry;
+  };
+
   static countryExists = async (receivedName: string): Promise<boolean> => {
     const country = await Country.findOne({
       where: { name: receivedName },

@@ -1,6 +1,5 @@
 import { DataTypes, Model } from 'sequelize';
 import db from '.';
-import Attendance from './Attendance.model';
 import Role from './Role.model';
 
 class User extends Model {

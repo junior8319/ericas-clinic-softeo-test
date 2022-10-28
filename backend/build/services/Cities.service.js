@@ -19,7 +19,6 @@ class Cities {
     constructor() {
         this.getCities = () => __awaiter(this, void 0, void 0, function* () {
             const cities = yield City_model_1.default.findAll({
-                raw: true,
                 include: { model: Country_model_1.default, as: 'country', attributes: { exclude: ['id'] } },
             });
             if (!cities)
@@ -85,5 +84,11 @@ Cities.cityExists = (receivedName) => __awaiter(void 0, void 0, void 0, function
     });
     const exists = !!city;
     return exists;
+});
+Cities.getCityById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const foundCity = yield City_model_1.default.findByPk(id);
+    if (!foundCity)
+        return null;
+    return foundCity;
 });
 exports.default = Cities;

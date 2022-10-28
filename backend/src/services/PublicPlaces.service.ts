@@ -8,6 +8,8 @@ class PublicPlaces {
 
   public name!: string;
 
+  public neighborhoodId!: number;
+
   public id!: number;
 
   constructor() {
@@ -26,9 +28,23 @@ class PublicPlaces {
     return publicPlacesList;
   };
 
-  static publicPlaceExists = async (receivedName: string): Promise<boolean> => {
+  static getPubPlaceById = async (receivedId: number): Promise<IPublicPlace | null> => {
+    const publicPlace = await PublicPlace.findByPk(receivedId);
+
+    if (!publicPlace) return null;
+
+    return publicPlace;
+  };
+
+  static publicPlaceExists = async (
+    receivedName: string,
+    receivedNeighborhoodId: Number
+  ): Promise<boolean> => {
     const publicPlace = await PublicPlace.findOne({
-      where: { name: receivedName },
+      where: {
+        name: receivedName,
+        neighborhoodId: receivedNeighborhoodId
+      },
     });
 
     const exists = !!publicPlace;
@@ -40,8 +56,10 @@ class PublicPlaces {
     if (!publicPlace) return null;
 
     this.name = publicPlace.name;
+    this.neighborhoodId = publicPlace.neighborhoodId;
     
-    const publicPlaceExists = await PublicPlaces.publicPlaceExists(this.name);
+    const publicPlaceExists = await PublicPlaces
+      .publicPlaceExists(this.name, this.neighborhoodId);
     if (publicPlaceExists) return null;
 
     const createdPublicPlace = await PublicPlace.create({ ...publicPlace });

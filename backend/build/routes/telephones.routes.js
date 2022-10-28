@@ -5,10 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const Telephones_controller_1 = __importDefault(require("../controllers/Telephones.controller"));
+const validateTelephones_middleware_1 = __importDefault(require("../middlewares/validateTelephones.middleware"));
 const error_middleware_1 = __importDefault(require("../middlewares/error.middleware"));
 const telephonesRouter = (0, express_1.Router)();
 telephonesRouter.get('/telephones', Telephones_controller_1.default.getTelephones, error_middleware_1.default.handleErrors);
-telephonesRouter.post('/telephones', Telephones_controller_1.default.createTelephone, error_middleware_1.default.handleErrors);
-telephonesRouter.put('/telephones/:id', Telephones_controller_1.default.updateTelephone, error_middleware_1.default.handleErrors);
-telephonesRouter.delete('/telephones/:id', Telephones_controller_1.default.deleteTelephone, error_middleware_1.default.handleErrors);
+telephonesRouter.post('/telephones', validateTelephones_middleware_1.default.validateCreatePhone, Telephones_controller_1.default.createTelephone, error_middleware_1.default.handleErrors);
+telephonesRouter.put('/telephones/:id', validateTelephones_middleware_1.default.validateUpdatePhone, Telephones_controller_1.default.updateTelephone, error_middleware_1.default.handleErrors);
+telephonesRouter.delete('/telephones/:id', validateTelephones_middleware_1.default.validateDeletePhone, Telephones_controller_1.default.deleteTelephone, error_middleware_1.default.handleErrors);
 exports.default = telephonesRouter;

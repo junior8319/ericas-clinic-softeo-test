@@ -19,7 +19,6 @@ class Neighborhoods {
     constructor() {
         this.getNeighborhoods = () => __awaiter(this, void 0, void 0, function* () {
             const neighborhoods = yield Neighborhood_model_1.default.findAll({
-                raw: true,
                 include: [
                     { model: City_model_1.default, as: 'city', attributes: { exclude: ['id'] } },
                 ],
@@ -29,10 +28,11 @@ class Neighborhoods {
             return neighborhoods;
         });
         this.createNeighborhood = (neighborhood) => __awaiter(this, void 0, void 0, function* () {
-            if (!Neighborhood_model_1.default)
+            if (!neighborhood)
                 return null;
-            this.name = Neighborhood_model_1.default.name;
-            const neighborhoodExists = yield Neighborhoods.neighborhoodExists(this.name);
+            this.name = neighborhood.name;
+            this.cityId = neighborhood.cityId;
+            const neighborhoodExists = yield Neighborhoods.neighborhoodExists(this.name, this.cityId);
             if (neighborhoodExists)
                 return null;
             const createdNeighborhood = yield Neighborhood_model_1.default.create(Object.assign({}, neighborhood));
@@ -71,11 +71,20 @@ class Neighborhoods {
     }
 }
 _a = Neighborhoods;
-Neighborhoods.neighborhoodExists = (receivedName) => __awaiter(void 0, void 0, void 0, function* () {
+Neighborhoods.neighborhoodExists = (receivedName, receivedCityId) => __awaiter(void 0, void 0, void 0, function* () {
     const neighborhood = yield Neighborhood_model_1.default.findOne({
-        where: { name: receivedName },
+        where: {
+            name: receivedName,
+            cityId: receivedCityId,
+        },
     });
     const exists = !!neighborhood;
     return exists;
+});
+Neighborhoods.getById = (receivedId) => __awaiter(void 0, void 0, void 0, function* () {
+    const neighborhood = yield Neighborhood_model_1.default.findByPk(receivedId);
+    if (!neighborhood)
+        return null;
+    return neighborhood;
 });
 exports.default = Neighborhoods;

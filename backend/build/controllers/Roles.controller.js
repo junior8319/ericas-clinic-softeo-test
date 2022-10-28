@@ -32,8 +32,11 @@ class Roles {
                 const role = req.body;
                 const createdRole = yield this.service.createRole(role);
                 if (!createdRole) {
-                    return res.status(400)
-                        .json({ message: `Não foi possível criar a função com os dados: ${role}` });
+                    return res.status(400).json({
+                        message: `Não foi possível criar a função com os dados:`,
+                        name: role.name,
+                        type: role.type,
+                    });
                 }
                 return res.status(201).json(createdRole);
             }
@@ -45,10 +48,6 @@ class Roles {
         this.updateRole = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                if (!id)
-                    return res.status(400).json({ message: 'É necessário informar o identificador(id)' });
-                if (!req.body)
-                    return res.status(400).json({ message: 'Sem dado para atualizar' });
                 const role = Object.assign(Object.assign({}, req.body), { id });
                 yield this.service.updateRole(role);
                 return res.status(200).json(role);
@@ -60,8 +59,6 @@ class Roles {
         this.deleteRole = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                if (!id)
-                    return res.status(400).json({ message: 'Por favor, nos passe um identificador(id) para excluir.' });
                 yield this.service.deleteRole(id);
                 return res.status(202).json({ message: 'Registro excluído com sucesso.' });
             }

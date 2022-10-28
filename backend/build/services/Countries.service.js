@@ -70,6 +70,12 @@ class Countries {
     }
 }
 _a = Countries;
+Countries.getCountryById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const foundCountry = yield Country_model_1.default.findByPk(id);
+    if (!foundCountry)
+        return null;
+    return foundCountry;
+});
 Countries.countryExists = (receivedName) => __awaiter(void 0, void 0, void 0, function* () {
     const country = yield Country_model_1.default.findOne({
         where: { name: receivedName },

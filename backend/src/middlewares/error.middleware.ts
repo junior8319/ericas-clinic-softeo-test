@@ -1,4 +1,3 @@
-import app from "../server/app";
 import express, { NextFunction, Request, Response } from 'express';
 
 class ErrorMiddleware {

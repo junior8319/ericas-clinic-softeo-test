@@ -48,8 +48,8 @@ class Users {
         this.createUser = (user) => __awaiter(this, void 0, void 0, function* () {
             if (!user)
                 return null;
-            this.name = user.name;
-            const userExists = yield Users.userExists(this.name);
+            this.cpf = user.cpf;
+            const userExists = yield Users.userExists(this.cpf);
             if (userExists)
                 return null;
             const createdUser = User_model_1.default.create(Object.assign({}, user));
@@ -94,9 +94,9 @@ class Users {
     }
 }
 _a = Users;
-Users.userExists = (receivedName) => __awaiter(void 0, void 0, void 0, function* () {
+Users.userExists = (receivedCpf) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_model_1.default.findOne({
-        where: { name: receivedName },
+        where: { cpf: receivedCpf },
     });
     const exists = !!user;
     return exists;

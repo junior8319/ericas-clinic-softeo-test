@@ -15,7 +15,6 @@ class Cities {
 
   public getCities = async (): Promise<ICity[] | null> => {
     const cities = await City.findAll({
-      raw: true,
       include: { model: Country, as: 'country', attributes: { exclude: ['id'] } },
     });
     if (!cities) return null;
@@ -31,6 +30,13 @@ class Cities {
     const exists = !!city;
 
     return exists;
+  };
+
+  static getCityById = async (id: number): Promise<ICity | null> => {
+    const foundCity = await City.findByPk(id);
+    if (!foundCity) return null;
+
+    return foundCity;
   };
 
   public createCity = async (city: ICity): Promise<ICity | null> => {
