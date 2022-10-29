@@ -28,11 +28,11 @@ Attendance.init(
     },
     customerUserId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     professionalUserId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     date: {
       type: DataTypes.DATEONLY,
