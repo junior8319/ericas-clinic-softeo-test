@@ -17,11 +17,11 @@ Attendance.init({
     },
     customerUserId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     professionalUserId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     date: {
         type: sequelize_1.DataTypes.DATEONLY,

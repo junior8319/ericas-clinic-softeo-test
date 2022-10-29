@@ -101,4 +101,10 @@ Users.userExists = (receivedCpf) => __awaiter(void 0, void 0, void 0, function* 
     const exists = !!user;
     return exists;
 });
+Users.getUserById = (receivedId) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield User_model_1.default.findByPk(receivedId);
+    if (!user)
+        return null;
+    return user;
+});
 exports.default = Users;

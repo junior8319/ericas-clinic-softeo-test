@@ -77,6 +77,72 @@ class UsersMiddleware {
                 next(error);
             }
         });
+        this.validateUpdateUser = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const userToUpdate = req.body;
+                const { name, birthDate, cpf, rg, roleId } = userToUpdate;
+                if (!userToUpdate ||
+                    !name &&
+                        !birthDate &&
+                        !cpf &&
+                        !rg &&
+                        !roleId) {
+                    return res.status(400).json({
+                        message: 'Sem dado para atualizar'
+                    });
+                }
+                const { id } = req.params;
+                if (!id || !Number(id))
+                    return res.status(400)
+                        .json({
+                        message: 'Por favor, nos informe um identificador(id)' +
+                            ' numérico para atualizar',
+                    });
+                this.id = Number(id);
+                const foundUser = yield Users_service_1.default.getUserById(this.id);
+                if (!foundUser)
+                    return res.status(400)
+                        .json({
+                        message: `Não temos registro com este identificador (id: ${this.id}` +
+                            ' em nosso banco de dados. Favor informar id válido.'
+                    });
+                if (!cpf)
+                    return next();
+                this.cpf = cpf;
+                const userExists = yield Users_service_1.default.userExists(this.cpf);
+                if (userExists)
+                    return res.status(400)
+                        .json({ message: `Já existe pessoa cadastrada com o cpf ${cpf}` });
+                next();
+            }
+            catch (error) {
+                console.log(error);
+                next(error);
+            }
+        });
+        this.validateDeleteUser = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                this.id = Number(id);
+                if (!id || !Number(id))
+                    return res.status(400)
+                        .json({
+                        message: 'Por favor, nos passe um identificador (id) numérico para excluir.',
+                    });
+                const foundUser = yield Users_service_1.default.getUserById(this.id);
+                if (!foundUser)
+                    return res.status(400)
+                        .json({
+                        message: `Identificador informado (id: ${this.id} não encontrado.` +
+                            ' Favor informar id válido.',
+                    });
+                next();
+            }
+            catch (error) {
+                console.log(error);
+                next(error);
+            }
+        });
         this.app = (0, express_1.default)();
         this.service = new Users_service_1.default();
     }
