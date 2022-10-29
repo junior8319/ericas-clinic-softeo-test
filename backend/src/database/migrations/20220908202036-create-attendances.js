@@ -11,15 +11,17 @@ module.exports = {
       },
       customer_user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       professional_user_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: { model: 'users', key: 'id' },
         onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       date: {
         type: Sequelize.DATEONLY,
