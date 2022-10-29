@@ -142,6 +142,32 @@ class UsersMiddleware {
       next(error);
     }
   };
+
+  public validateDeleteUser = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+
+      this.id = Number(id);
+      if (!id || !Number(id)) return res.status(400)
+        .json({
+          message:
+          'Por favor, nos passe um identificador (id) numérico para excluir.',
+        });
+      
+      const foundUser = await UsersService.getUserById(this.id);
+      if (!foundUser) return res.status(400)
+        .json({
+          message:
+            `Identificador informado (id: ${this.id} não encontrado.` +
+              ' Favor informar id válido.',
+        });
+
+      next();
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 export default new UsersMiddleware();
