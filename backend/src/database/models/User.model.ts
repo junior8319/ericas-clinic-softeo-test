@@ -44,7 +44,7 @@ User.init(
     },
     roleId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
   },
   {
