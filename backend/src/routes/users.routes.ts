@@ -27,6 +27,7 @@ usersRouter.put(
 
 usersRouter.delete(
   '/users/:id',
+  UsersMiddleware.validateDeleteUser,
   UsersController.deleteUser,
   errorMiddleware.handleErrors,
 );
