@@ -35,7 +35,7 @@ User.init({
     },
     roleId: {
         type: sequelize_1.DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
 }, {
     sequelize: _1.default,

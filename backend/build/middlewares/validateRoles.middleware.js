@@ -67,6 +67,7 @@ class RolesMiddleware {
                 if (!id || !Number(id))
                     return res.status(400)
                         .json({ message: 'Por favor, nos passe um identificador(id) numérico para excluir.' });
+                next();
             }
             catch (error) {
                 console.log(error);
