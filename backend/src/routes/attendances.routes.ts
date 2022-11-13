@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import AttendancesController from '../controllers/Attendances.controller';
+import AttendancesMiddleware from '../middlewares/validateAttendances.middleware';
 import errorMiddleware from '../middlewares/error.middleware';
 
 const attendancesRouter = Router();
@@ -12,6 +13,7 @@ attendancesRouter.get(
 
 attendancesRouter.post(
   '/attendances',
+  AttendancesMiddleware.validateCreateAttendance,
   AttendancesController.createAttendance,
   errorMiddleware.handleErrors,
 );
