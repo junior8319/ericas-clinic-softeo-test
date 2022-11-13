@@ -119,3 +119,11 @@ services:
       - SYS_NICE
 /********************************************************/
 
+/*************************************************/
+Checar se uma data é válida.
+https://www.horadecodar.com.br/2021/04/29/como-detectar-uma-data-invalida-em-javascript/
+
+Testar se ano é bissexto
+https://learn.microsoft.com/pt-br/office/troubleshoot/excel/determine-a-leap-year
+
+https://gist.github.com/samueltcsantos/b15eaae8dde4dff47fe6
